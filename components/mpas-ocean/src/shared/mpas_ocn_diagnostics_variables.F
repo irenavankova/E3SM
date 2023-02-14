@@ -82,6 +82,8 @@ module ocn_diagnostics_variables
    real (kind=RKIND), dimension(:), pointer :: surfaceFluxAttenuationCoefficientRunoff
 
    real (kind=RKIND), dimension(:), pointer :: landIceFrictionVelocity
+   real (kind=RKIND), dimension(:), pointer :: landIceTidalFrictionVelocity
+
    real (kind=RKIND), dimension(:), pointer :: topDrag
    real (kind=RKIND), dimension(:), pointer :: topDragMag
    real (kind=RKIND), dimension(:), pointer :: topographic_wave_drag
@@ -348,6 +350,8 @@ contains
                     landIceTracerTransferVelocities)
          call mpas_pool_get_array(diagnosticsPool, &
                    'landIceFrictionVelocity', landIceFrictionVelocity)
+         call mpas_pool_get_array(diagnosticsPool, &
+                   'landIceTidalFrictionVelocity', landIceTidalFrictionVelocity)
       end if
 
       if ( trim(config_ocean_run_mode) == 'init' ) then
@@ -673,7 +677,8 @@ contains
          !$acc                   topDragMag,                      &
          !$acc                   landIceBoundaryLayerTracers,     &
          !$acc                   landIceTracerTransferVelocities, &
-         !$acc                   landIceFrictionVelocity)
+         !$acc                   landIceFrictionVelocity,         &
+         !$acc                   landIceTidalFrictionVelocity)
       end if
       if (config_use_topographic_wave_drag) then
          !$acc enter data create(topographic_wave_drag)
@@ -914,7 +919,8 @@ contains
          !$acc                   topDragMag,                      &
          !$acc                   landIceBoundaryLayerTracers,     &
          !$acc                   landIceTracerTransferVelocities, &
-         !$acc                   landIceFrictionVelocity)
+         !$acc                   landIceFrictionVelocity,         &
+         !$acc                   landIceTidalFrictionVelocity)
       end if
       if (config_use_topographic_wave_drag) then
          !$acc exit data delete(topographic_wave_drag)
@@ -1123,7 +1129,8 @@ contains
                  topDragMag,                      &
                  landIceBoundaryLayerTracers,     &
                  landIceTracerTransferVelocities, &
-                 landIceFrictionVelocity)
+                 landIceFrictionVelocity,         &
+                 landIceTidalFrictionVelocity)
       end if
       if ( trim(config_ocean_run_mode) == 'init' ) then
          nullify(rx1Edge,                  &
