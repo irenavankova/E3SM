@@ -38,6 +38,11 @@
   </compset>
 
   <compset>
+    <alias>GMPAS-NYF-ISMF-TMIX</alias>
+    <lname>2000_DATM%NYF_SLND_MPASSI_MPASO%ISMFDATMFORCEDTMIX_DROF%NYFAIS45_SGLC_SWAV</lname>
+  </compset>
+
+  <compset>
     <alias>GMPAS-IAF</alias>
     <lname>2000_DATM%IAF_SLND_MPASSI_MPASO%DATMFORCED_DROF%IAF_SGLC_SWAV</lname>
   </compset>
@@ -95,6 +100,11 @@
   <compset>
     <alias>GMPAS-IAF-ISMF</alias>
     <lname>2000_DATM%IAF_SLND_MPASSI_MPASO%ISMFDATMFORCED_DROF%IAFAIS45_SGLC_SWAV</lname>
+  </compset>
+
+  <compset>
+    <alias>GMPAS-IAF-ISMF-TMIX</alias>
+    <lname>2000_DATM%IAF_SLND_MPASSI_MPASO%ISMFDATMFORCEDTMIX_DROF%IAFAIS45_SGLC_SWAV</lname>
   </compset>
 
   <compset>
