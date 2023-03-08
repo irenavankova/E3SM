@@ -129,6 +129,7 @@ def buildnml(case, caseroot, compname):
     elif ocn_grid == 'oQU240wLI':
         decomp_date = '160929'
         decomp_prefix = 'mpas-o.graph.info.'
+        u_tidal_rms_file = 'oQU240wLI_velocityTidalRMS_CATS2008.nc'
         ic_date = '160929'
         ic_prefix = 'ocean.QU.240wLI'
         if ocn_ic_mode == 'spunup':
