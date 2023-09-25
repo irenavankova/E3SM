@@ -310,7 +310,7 @@ contains
                if (.not.use_Redi_diag_terms) cycle
 
                ! term 2: div( h S d/dz psi )
-               flux_term2 = coef*kappaRediEdgeVal*RediKappa(iEdge)*layerThickEdgeMean(k, iEdge)* &
+               flux_term2 = coef*RediKappa(iEdge)*layerThickEdgeMean(k, iEdge)* &
                             0.25_RKIND* &
                             (slopeTriadDown(k, 1, iEdge)*(tracers(iTr, k, cell1) - tracers(iTr, k + 1, cell1)) &
                              /(zMid(k, cell1) - zMid(k + 1, cell1)) &
@@ -348,7 +348,7 @@ contains
                   if (.not.use_Redi_diag_terms) cycle
 
                   ! term 2: div( h S d/dz psi )
-                  flux_term2 = coef*RediKappa(iEdge)*kappaRediEdgeVal*layerThickEdgeMean(k, iEdge)* &
+                  flux_term2 = coef*RediKappa(iEdge)*layerThickEdgeMean(k, iEdge)* &
                                0.25_RKIND* &
                                (slopeTriadUp(k, 1, iEdge)*(tracers(iTr, k - 1, cell1) - tracers(iTr, k, cell1)) &
                                 /(zMid(k - 1, cell1) - zMid(k, cell1)) &
@@ -428,9 +428,7 @@ contains
             do k = minLevelCell(iCell), maxLevelCell(iCell)
                do iTr = 1, nTracers
                   flux_term3 = rediKappaCell(iCell) * ( &
-                     RediKappaScaling(k, iCell)* &
                      redi_term3_topOfCell(iTr, k, iCell) - &
-                     RediKappaScaling(k + 1, iCell)* &
                      redi_term3_topOfCell(iTr, k + 1, iCell))
 
                   redi_term3(iTr, k, iCell) = redi_term3(iTr, k, iCell) + flux_term3
@@ -530,9 +528,7 @@ contains
 
                   tend(iTr, k, iCell) = tend(iTr, k, iCell) + &
                      rediKappaCell(iCell) * ( &
-                        RediKappaScaling(k, iCell)* &
                         scalUp*redi_term3_topOfCell(iTr, k, iCell) - &
-                        RediKappaScaling(k + 1, iCell)* &
                         scalDn*redi_term3_topOfCell(iTr, k + 1, iCell))
                end do
             end do
