@@ -217,6 +217,7 @@ contains
       !! tracersSurfaceValue calc                :: minLevelCell (mesh array)
       !! normalVelocitySurfaceLayer calc         :: minLevelEdgeBot (mesh array)
       !! surfaceFluxAttenuationCoefficientRunoff :: layerThickEdgeFlux (diagnostics array)
+      !! surfaceFluxAttenuationCoefficientSubglacialRunoff :: layerThickEdgeFlux (diagnostics array)
       !! ocn_diagnostic_solve_ssh                :: ssh, (not on device)
       !!                                            landIceDraft (not on device)
 
@@ -448,11 +449,13 @@ contains
          !
          ! inputs: layerThickness, activeTracers, layerThicknessEdgeFlux, normalVelocity
          ! outputs: tracersSurfaceLayerValue, indexSurfaceLayerDepth, normalVelocitySurfaceLayer,
-         !          surfaceFluxAttenuationCoefficient, surfaceFluxAttenuationCoefficientRunoff
+         !          surfaceFluxAttenuationCoefficient, surfaceFluxAttenuationCoefficientRunoff,
+         !          surfaceFluxAttenuationCoefficientSubglacialRunoff
          call ocn_diagnostic_solve_surfaceLayer(layerThickness, activeTracers, &
                 layerThickEdgeFlux, normalVelocity, tracersSurfaceLayerValue, &
                 indexSurfaceLayerDepth, normalVelocitySurfaceLayer, &
-                sfcFlxAttCoeff, surfaceFluxAttenuationCoefficientRunoff)
+                sfcFlxAttCoeff, surfaceFluxAttenuationCoefficientRunoff, &
+                surfaceFluxAttenuationCoefficientSubglacialRunoff)
 
       end if ! full_compute
 
@@ -519,6 +522,11 @@ contains
       !!                                            normalVelocitySurfaceLayer, (diagnostics array)
       !!                                            surfaceFluxAttenuationCoefficient, ????
       !!                                            surfaceFluxAttenuationCoefficientRunoff (diagnostics array)
+      !! surfaceFluxAttenuationCoefficientSubglacialRunoff :: tracersSurfaceLayerValue, (diagnostics array)
+      !!                                            indexSurfaceLayerDepth, (diagnostics array)
+      !!                                            normalVelocitySurfaceLayer, (diagnostics array)
+      !!                                            surfaceFluxAttenuationCoefficient, ????
+      !!                                            surfaceFluxAttenuationCoefficientSubglacialRunoff (diagnostics array)
       !! ocn_diagnostic_solve_ssh                :: pressureAdjustedSSH, (diagnostics array)
       !!                                            gradSSH (diagnostics array)
 
@@ -554,7 +562,8 @@ contains
 !        !$acc             indexSurfaceLayerDepth, &
 !        !$acc             normalVelocitySurfaceLayer, &
 !        !$acc             sfcFlxAttCoeff, &
-!        !$acc             surfaceFluxAttenuationCoefficientRunoff)
+!        !$acc             surfaceFluxAttenuationCoefficientRunoff, &
+!        !$acc             surfaceFluxAttenuationCoefficientSubglacialRunoff)
 !     end if ! full_compute
 
 !     !$acc exit data delete (atmosphericPressure, seaIcePressure)
@@ -1659,7 +1668,8 @@ contains
                 tracersSurfaceLayerValue, indexSurfaceLayerDepth, &
                 normalVelocitySurfaceLayer, &
                 surfaceFluxAttenuationCoefficient, &
-                surfaceFluxAttenuationCoefficientRunoff)!{{{
+                surfaceFluxAttenuationCoefficientRunoff, &
+                surfaceFluxAttenuationCoefficientSubglacialRunoff)!{{{
 
       !-----------------------------------------------------------------
       ! input variables
@@ -1684,7 +1694,8 @@ contains
          indexSurfaceLayerDepth,     &!< [out] layer index at sfc lyr depth
          normalVelocitySurfaceLayer, &!< [out] avg velocity over sfc layer
          surfaceFluxAttenuationCoefficient, &!< [out] sfc flx attenuation
-         surfaceFluxAttenuationCoefficientRunoff !< [out] sfc flx attenuation
+         surfaceFluxAttenuationCoefficientRunoff, &!< [out] sfc flx attenuation
+         surfaceFluxAttenuationCoefficientSubglacialRunoff !< [out] sfc flx attenuation
 
       !-----------------------------------------------------------------
       ! local variables
@@ -1848,7 +1859,8 @@ contains
 #ifdef MPAS_OPENACC
       !$acc parallel loop &
       !$acc    present(surfaceFluxAttenuationCoefficient, &
-      !$acc            surfaceFluxAttenuationCoefficientRunoff)
+      !$acc            surfaceFluxAttenuationCoefficientRunoff, &
+      !$acc            surfaceFluxAttenuationCoefficientSubglacialRunoff)
 #else
       !$omp parallel
       !$omp do schedule(runtime)
@@ -1858,6 +1870,8 @@ contains
                       config_flux_attenuation_coefficient
          surfaceFluxAttenuationCoefficientRunoff(iCell) = &
                       config_flux_attenuation_coefficient_runoff
+         surfaceFluxAttenuationCoefficientSubglacialRunoff(iCell) = &
+                      config_flux_attenuation_coefficient_subglacial_runoff
       end do
 #ifndef MPAS_OPENACC
       !$omp end do
