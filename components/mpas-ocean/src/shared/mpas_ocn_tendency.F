@@ -134,7 +134,8 @@ contains
       real (kind=RKIND), dimension(:,:), pointer, contiguous :: &
          tendThick,        &! accumulated layer thickness tendency
          fractionAbsorbed, &! fraction of sfc flux absorbed
-         fractionAbsorbedRunoff ! fraction of runoff flux absorbed
+         fractionAbsorbedRunoff, &! fraction of sfc flux absorbed
+         fractionAbsorbedSubglacialRunoff ! fraction of subglacial runoff flux absorbed
 
       !-----------------------------------------------------------------
       ! local variables
@@ -161,6 +162,10 @@ contains
                                              fractionAbsorbed)
       call mpas_pool_get_array(forcingPool, 'fractionAbsorbedRunoff', &
                                              fractionAbsorbedRunoff)
+      call mpas_pool_get_array(forcingPool, 'fractionAbsorbedSubglacialRunoff', &
+                                             fractionAbsorbedSubglacialRunoff)
+
+
 
       !
       ! layer thickness tendency: 
@@ -607,9 +612,11 @@ contains
       real (kind=RKIND), dimension(:,:), pointer, contiguous :: &
          layerThickness,               &! layer thickness
          tracerGroupSurfaceFlux,       &! tracer flux at surface
-         fractionAbsorbed,             &! frac sfc flux aborbed
-         fractionAbsorbedRunoff,       &! frac runoff flux aborbed
+         fractionAbsorbed,             &! frac sfc flux absorbed
+         fractionAbsorbedRunoff,       &! frac runoff flux absorbed
+         fractionAbsorbedSubglacialRunoff,       &! frac subglacial runoff flux absorbed
          tracerGroupSurfaceFluxRunoff, &! runoff flux
+         tracerGroupSurfaceFluxSubglacialRunoff, &! subglacial runoff flux
          tracerGroupSurfaceFluxRemoved,&! total sfc flux absorbed
          nonLocalSurfaceTracerFlux      ! non-local fluxes (eg KPP)
 
@@ -671,6 +678,8 @@ contains
                                              fractionAbsorbed)
       call mpas_pool_get_array(forcingPool, 'fractionAbsorbedRunoff', &
                                              fractionAbsorbedRunoff)
+      call mpas_pool_get_array(forcingPool, 'fractionAbsorbedSubglacialRunoff', &
+                                             fractionAbsorbedSubglacialRunoff)
 
       ! allocate and transfer data not specific to tracer groups
       allocate(normalThicknessFlux(nVertLevels, nEdgesAll+1))
@@ -795,6 +804,14 @@ contains
                                   modifiedGroupName, &
                                   tracerGroupSurfaceFluxRunoff)
 
+         ! Get surface flux due to subglacial runoff array
+         ! only active tracers have subglacial runoff flux for now,
+         ! but we still need to associate for ALL tracers
+         modifiedGroupName = groupName // "SurfaceFluxSubglacialRunoff"
+         call mpas_pool_get_array(tracersSurfaceFluxPool, &
+                                  modifiedGroupName, &
+                                  tracerGroupSurfaceFluxSubglacialRunoff)
+
          ! Get surface flux removed array to keep track of how much
          ! flux is ignored
          modifiedGroupName = groupName // "SurfaceFluxRemoved"
@@ -821,6 +838,7 @@ contains
          do n=1,nTracersGroup
             tracerGroupSurfaceFlux       (n,iCell) = 0.0_RKIND
             tracerGroupSurfaceFluxRunoff (n,iCell) = 0.0_RKIND
+            tracerGroupSurfaceFluxSubglacialRunoff (n,iCell) = 0.0_RKIND
             tracerGroupSurfaceFluxRemoved(n,iCell) = 0.0_RKIND
          end do
          end do
@@ -836,6 +854,7 @@ contains
                                   forcingPool, tracerGroup, &
                                   tracerGroupSurfaceFlux, &
                                   tracerGroupSurfaceFluxRunoff, &
+                                  tracerGroupSurfaceFluxSubglacialRunoff, &
                                   tracerGroupSurfaceFluxRemoved, &
                                   dt, layerThickness, err)
 
@@ -1195,9 +1214,9 @@ contains
          endif ! compute budgets
 
          call ocn_tracer_surface_flux_tend(meshPool, fractionAbsorbed, &
-                               fractionAbsorbedRunoff, layerThickness, &
-                               tracerGroupSurfaceFlux, &
-                               tracerGroupSurfaceFluxRunoff,  &
+                               fractionAbsorbedRunoff, fractionAbsorbedSubglacialRunoff, &
+                               layerThickness, tracerGroupSurfaceFlux, &
+                               tracerGroupSurfaceFluxRunoff, tracerGroupSurfaceFluxSubglacialRunoff,  &
                                tracerGroupTend, err)
 
          !

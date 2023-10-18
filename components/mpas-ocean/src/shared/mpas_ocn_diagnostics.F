@@ -3244,6 +3244,7 @@ contains
       real (kind=RKIND) :: &
          fracAbsorbed,       &! fraction of sfc flux absorbed
          fracAbsorbedRunoff, &! same for runoff
+         fracAbsorbedSubglacialRunoff, &! same for subglacial runoff
          sumSurfaceStressSquared ! sum of sfc stress squared
 
       ! pointers for variable/pool retrievals
@@ -3259,6 +3260,7 @@ contains
          penetrativeTemperatureFlux, &! various sfc flux components
          surfaceThicknessFlux, &
          surfaceThicknessFluxRunoff, &
+         surfaceThicknessFluxSubglacialRunoff, &
          rainTemperatureFlux, &
          evapTemperatureFlux, &
          icebergTemperatureFlux, &
@@ -3271,6 +3273,7 @@ contains
          normalVelocity,           &! normal velocity
          activeTracersSurfaceFlux, &! sfc flux of active tracers (T,S)
          activeTracersSurfaceFluxRunoff, &! flx of tracers in runoff
+         activeTracersSurfaceFluxSubglacialRunoff, &! flx of tracers in subglacial runoff
          nonLocalSurfaceTracerFlux  ! non-local flux of tracers
 
       real (kind=RKIND), dimension(:,:,:), pointer :: &
@@ -3334,11 +3337,16 @@ contains
       call mpas_pool_get_array(tracersSurfaceFluxPool, &
                               'activeTracersSurfaceFluxRunoff', &
                                activeTracersSurfaceFluxRunoff)
+      call mpas_pool_get_array(tracersSurfaceFluxPool, &
+                              'activeTracersSurfaceFluxSubglacialRunoff', &
+                               activeTracersSurfaceFluxSubglacialRunoff)
 
       call mpas_pool_get_array(forcingPool, 'surfaceThicknessFlux', &
                                              surfaceThicknessFlux)
       call mpas_pool_get_array(forcingPool, 'surfaceThicknessFluxRunoff', &
                                              surfaceThicknessFluxRunoff)
+      call mpas_pool_get_array(forcingPool, 'surfaceThicknessFluxSubglacialRunoff', &
+                                             surfaceThicknessFluxSubglacialRunoff)
       call mpas_pool_get_array(forcingPool, 'penetrativeTemperatureFlux', &
                                              penetrativeTemperatureFlux)
       call mpas_pool_get_array(forcingPool, 'surfaceStress', &
@@ -3411,7 +3419,7 @@ contains
 
       !$omp parallel
       !$omp do schedule(runtime) &
-      !$omp private(kmin, fracAbsorbed, fracAbsorbedRunoff, &
+      !$omp private(kmin, fracAbsorbed, fracAbsorbedRunoff, fracAbsorbedSubglacialRunoff, &
       !$omp         sumSurfaceStressSquared, i, iEdge)
       do iCell = 1, nCells
 
@@ -3425,6 +3433,10 @@ contains
                       - exp( max(-100.0_RKIND, &
                                  -layerThickness(kmin, iCell)/ &
                            config_flux_attenuation_coefficient_runoff))
+         fracAbsorbedSubglacialRunoff = 1.0_RKIND &
+                      - exp( max(-100.0_RKIND, &
+                                 -layerThickness(kmin, iCell)/ &
+                           config_flux_attenuation_coefficient_subglacial_runoff))
 
          ! Store the total tracer flux below in
          ! nonLocalSurfaceTemperatureFlux for use in the CVMix nonlocal
@@ -3439,13 +3451,17 @@ contains
                                   seaIceTemperatureFlux(iCell) + &
                                   icebergTemperatureFlux(iCell)) &
                  - fracAbsorbedRunoff* &
-                   activeTracersSurfaceFluxRunoff(indexTempFlux,iCell)
+                   activeTracersSurfaceFluxRunoff(indexTempFlux,iCell) &
+                 - fracAbsorbedSubglacialRunoff* &
+                   activeTracersSurfaceFluxSubglacialRunoff(indexTempFlux,iCell)
 
          nonLocalSurfaceTracerFlux(indexSaltFlux,iCell) = &
                    activeTracersSurfaceFlux(indexSaltFlux,iCell) &
                  - fracAbsorbed*surfaceThicknessFlux(iCell)* &
                    activeTracers(indexSaltFlux,kmin,iCell) &
                  - fracAbsorbedRunoff*surfaceThicknessFluxRunoff(iCell)* &
+                   activeTracers(indexSaltFlux,kmin,iCell) &
+                 - fracAbsorbedSubglacialRunoff*surfaceThicknessFluxSubglacialRunoff(iCell)* &
                    activeTracers(indexSaltFlux,kmin,iCell)
 
          surfaceBuoyancyForcing(iCell) = &
@@ -4385,7 +4401,7 @@ contains
                call ocn_write_field_statistics(debugUnit, fieldName, minValue, maxValue)
             end if
 
-            ! Test riverRunoffFlux
+            ! Test subglacialRunoffFlux
             fieldName = 'subglacialRunoffFlux'
             minValue = HUGE(minValue)
             maxValue = -HUGE(maxValue)
