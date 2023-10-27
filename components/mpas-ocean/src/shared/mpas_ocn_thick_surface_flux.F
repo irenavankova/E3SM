@@ -121,6 +121,8 @@ contains
 
       real (kind=RKIND) :: remainingFlux, remainingFluxRunoff, remainingFluxSubglacialRunoff
 
+      CHARACTER(LEN=15) :: str
+
       err = 0
 
       if (.not. surfaceThicknessFluxOn) return
@@ -155,7 +157,8 @@ contains
 
         !IV comment
         if(surfaceThicknessFluxSubglacialRunoff(iCell) /= 0) then
-            call mpas_log_write('        OCN Model time step is: ' // surfaceThicknessFluxSubglacialRunoff(iCell), MPAS_LOG_ERR)
+            Write( str, * )  surfaceThicknessFluxSubglacialRunoff(iCell)
+            call mpas_log_write('        surfaceThicknessFluxSubglacialRunoff is: ' // str, MPAS_LOG_ERR)
         end if
 
         if(maxLevelCell(iCell) > 0 .and. remainingFlux > 0.0_RKIND) then
