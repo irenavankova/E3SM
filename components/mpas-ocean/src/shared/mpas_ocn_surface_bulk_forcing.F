@@ -355,8 +355,9 @@ contains
         surfaceThicknessFluxRunoff(iCell) = riverRunoffFlux(iCell) / rho_sw
         surfaceThicknessFluxSubglacialRunoff(iCell) = subglacialRunoffFlux(iCell) / areaCell(iCell)
         !IV comment
-        call mpas_log_write('subglacialRunoffFlux: $r', realArgs=(/subglacialRunoffFlux(iCell)/))
         call mpas_log_write('Cell number: $i', intArgs=(/iCell/))
+        call mpas_log_write('subglacialRunoffFlux: $r', realArgs=(/subglacialRunoffFlux(iCell)/))
+        call mpas_log_write('surfaceThicknessFluxSubglacialRunoff: $r', realArgs=(/surfaceThicknessFluxSubglacialRunoff(iCell)/))
       end do
 #ifndef MPAS_OPENACC
       !$omp end do
