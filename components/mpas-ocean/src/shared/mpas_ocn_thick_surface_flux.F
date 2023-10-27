@@ -141,6 +141,8 @@ contains
       !$omp parallel
       !$omp do schedule(runtime) private(remainingFlux, remainingFluxRunoff, remainingFluxSubglacialRunoff, k)
 #endif
+      !IV comment
+      call mpas_log_write('entering dangerous territory')
       do iCell = 1, nCellsOwned
         remainingFlux = 1.0_RKIND
         remainingFluxRunoff = 1.0_RKIND
