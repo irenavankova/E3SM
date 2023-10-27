@@ -154,7 +154,7 @@ contains
         end do
 
         !IV comment
-        if(surfaceThicknessFluxSubglacialRunoff(iCell) /= 0)
+        if(surfaceThicknessFluxSubglacialRunoff(iCell) /= 0) then
             call mpas_log_write('        OCN Model time step is: ' // trim(surfaceThicknessFluxSubglacialRunoff(iCell)), MPAS_LOG_ERR)
         end if
 
