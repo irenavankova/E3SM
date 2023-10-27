@@ -160,9 +160,12 @@ contains
         !IV comment
         if(surfaceThicknessFluxSubglacialRunoff(iCell) /= 0) then
             call mpas_log_write('surfaceThicknessFluxSubglacialRunoff:')
+            print *,surfaceThicknessFluxSubglacialRunoff(iCell)
+            call mpas_log_write('PrintReal: $r', MPAS_LOG_ERR, realArgs=(/surfaceThicknessFluxSubglacialRunoff(iCell)/))
+            call mpas_log_write('PrintInt: $i', MPAS_LOG_ERR, intArgs=(/iCell/))
             !write (WCstring,'(F18.3)') current_wallclock_time
-            Write( str,'(F18.3)')  surfaceThicknessFluxSubglacialRunoff(iCell)
-            call mpas_log_write(trim(str))
+            !Write( str,'(F18.3)')  surfaceThicknessFluxSubglacialRunoff(iCell)
+            !call mpas_log_write(trim(str))
             !call mpas_log_write(trim(timeStamp) // '  surfaceThicknessFluxSubglacialRunoff:' // WCstring)
         end if
 
