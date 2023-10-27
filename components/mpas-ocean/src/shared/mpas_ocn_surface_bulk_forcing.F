@@ -29,6 +29,7 @@ module ocn_surface_bulk_forcing
    use ocn_config
    use ocn_mesh
    use ocn_equation_of_state
+   use mpas_log !IV comment
 
    implicit none
    private
@@ -347,11 +348,15 @@ contains
       !$omp parallel
       !$omp do schedule(runtime)
 #endif
+      call mpas_log_write('Read subglacialRunoffFlux')
       do iCell = 1, nCells
         surfaceThicknessFlux(iCell) = surfaceThicknessFlux(iCell) + ( snowFlux(iCell) + rainFlux(iCell) + evaporationFlux(iCell) &
                                     + seaIceFreshWaterFlux(iCell) + icebergFreshWaterFlux(iCell) + iceRunoffFlux(iCell) ) / rho_sw
         surfaceThicknessFluxRunoff(iCell) = riverRunoffFlux(iCell) / rho_sw
         surfaceThicknessFluxSubglacialRunoff(iCell) = subglacialRunoffFlux(iCell) / areaCell(iCell)
+        !IV comment
+        call mpas_log_write('subglacialRunoffFlux: $r', realArgs=(/subglacialRunoffFlux(iCell)/))
+        call mpas_log_write('Cell number: $i', intArgs=(/iCell/))
       end do
 #ifndef MPAS_OPENACC
       !$omp end do

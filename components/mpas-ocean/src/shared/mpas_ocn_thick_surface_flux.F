@@ -26,7 +26,7 @@ module ocn_thick_surface_flux
    use ocn_constants
    use ocn_config
    use ocn_mesh
-   use mpas_log
+   use mpas_log !IV comment
 
    use ocn_forcing
 
@@ -142,7 +142,7 @@ contains
       !$omp do schedule(runtime) private(remainingFlux, remainingFluxRunoff, remainingFluxSubglacialRunoff, k)
 #endif
       !IV comment
-      call mpas_log_write('entering dangerous territory')
+      !call mpas_log_write('entering dangerous territory')
       do iCell = 1, nCellsOwned
         remainingFlux = 1.0_RKIND
         remainingFluxRunoff = 1.0_RKIND
@@ -159,10 +159,10 @@ contains
 
         !IV comment
         if(surfaceThicknessFluxSubglacialRunoff(iCell) /= 0) then
-            call mpas_log_write('surfaceThicknessFluxSubglacialRunoff:')
-            print *,surfaceThicknessFluxSubglacialRunoff(iCell)
-            call mpas_log_write('PrintReal: $r', MPAS_LOG_ERR, realArgs=(/surfaceThicknessFluxSubglacialRunoff(iCell)/))
-            call mpas_log_write('PrintInt: $i', MPAS_LOG_ERR, intArgs=(/iCell/))
+            !call mpas_log_write('surfaceThicknessFluxSubglacialRunoff:')
+            !print *,surfaceThicknessFluxSubglacialRunoff(iCell) !not printing into log file
+            !call mpas_log_write('PrintReal: $r', MPAS_LOG_ERR, realArgs=(/surfaceThicknessFluxSubglacialRunoff(iCell)/))
+            !call mpas_log_write('PrintInt: $i', MPAS_LOG_ERR, intArgs=(/iCell/))
             !write (WCstring,'(F18.3)') current_wallclock_time
             !Write( str,'(F18.3)')  surfaceThicknessFluxSubglacialRunoff(iCell)
             !call mpas_log_write(trim(str))
