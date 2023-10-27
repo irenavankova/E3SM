@@ -157,8 +157,11 @@ contains
 
         !IV comment
         if(surfaceThicknessFluxSubglacialRunoff(iCell) /= 0) then
-            Write( str, * )  surfaceThicknessFluxSubglacialRunoff(iCell)
-            call mpas_log_write('        surfaceThicknessFluxSubglacialRunoff is: ' // str, MPAS_LOG_ERR)
+            call mpas_log_write('surfaceThicknessFluxSubglacialRunoff:')
+            !write (WCstring,'(F18.3)') current_wallclock_time
+            Write( str,'(F18.3)')  surfaceThicknessFluxSubglacialRunoff(iCell)
+            call mpas_log_write(trim(str))
+            !call mpas_log_write(trim(timeStamp) // '  surfaceThicknessFluxSubglacialRunoff:' // WCstring)
         end if
 
         if(maxLevelCell(iCell) > 0 .and. remainingFlux > 0.0_RKIND) then
