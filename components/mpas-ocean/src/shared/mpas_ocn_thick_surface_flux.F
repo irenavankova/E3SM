@@ -26,6 +26,7 @@ module ocn_thick_surface_flux
    use ocn_constants
    use ocn_config
    use ocn_mesh
+   use mpas_log
 
    use ocn_forcing
 
@@ -151,6 +152,11 @@ contains
                                           + surfaceThicknessFluxRunoff(iCell) * transmissionCoefficientsRunoff(k, iCell)  &
                                           + surfaceThicknessFluxSubglacialRunoff(iCell) * transmissionCoefficientsSubglacialRunoff(k, iCell)
         end do
+
+        !IV comment
+        if(surfaceThicknessFluxSubglacialRunoff(iCell) /= 0)
+            call mpas_log_write('        OCN Model time step is: ' // trim(surfaceThicknessFluxSubglacialRunoff(iCell)), MPAS_LOG_ERR)
+        end if
 
         if(maxLevelCell(iCell) > 0 .and. remainingFlux > 0.0_RKIND) then
           tend(maxLevelCell(iCell), iCell) = tend(maxLevelCell(iCell), iCell) + remainingFlux * surfaceThicknessFlux(iCell)
