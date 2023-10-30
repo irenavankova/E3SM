@@ -691,6 +691,10 @@
 					description="The length scale of exponential decay of river runoff. Fluxes are multiplied by $e^{z/\gamma}$, where this coefficient is $\gamma$."
 					possible_values="Any positive real number."
 		/>
+		<nml_option name="config_flux_attenuation_coefficient_subglacial_runoff" type="real" default_value="10" units="m"
+					description="The length scale of exponential decay of subglacial runoff. Fluxes are multiplied by $e^{z/\gamma}$, where this coefficient is $\gamma$."
+					possible_values="Any positive real number."
+		/>
 	</nml_record>
 	<nml_record name="time_varying_forcing" mode="init;forward">
 		<nml_option name="config_use_time_varying_atmospheric_forcing" type="logical" default_value=".false."
@@ -2163,6 +2167,7 @@
 			<var name="seaIceFreshWaterFlux"/>
 			<var name="icebergFreshWaterFlux"/>
 			<var name="riverRunoffFlux"/>
+			<var name="subglacialRunoffFlux"/>
 			<var name="iceRunoffFlux"/>
 			<var name="rainFlux"/>
 			<var name="snowFlux"/>
@@ -3205,6 +3210,9 @@
 		<var name="surfaceFluxAttenuationCoefficientRunoff" type="real" dimensions="nCells Time" units="m"
 			description="The spatially-dependent length scale of exponential decay of river runoff. Fluxes are multiplied by $e^{z/\gamma}$, where this coefficient is $\gamma$."
 		/>
+		<var name="surfaceFluxAttenuationCoefficientSubglacialRunoff" type="real" dimensions="nCells Time" units="m"
+			description="The spatially-dependent length scale of exponential decay of subglacial runoff. Fluxes are multiplied by $e^{z/\gamma}$, where this coefficient is $\gamma$."
+		/>
 		<var name="topographic_wave_drag" type="real" dimensions="nEdges" units="1"
 			description="wave drag coefficient or 1/(rinv) where rinv is the e-folding time used in HyCOM"
 			packages="topographicWaveDragPKG"
@@ -3443,6 +3451,10 @@
 			 description="Flux of mass through the ocean surface due to river runoff. Positive into ocean."
 			 packages="forwardMode;analysisMode"
 		/>
+		<var name="surfaceThicknessFluxSubglacialRunoff" type="real" dimensions="nCells Time" units="m s^-1"
+			 description="Flux of mass through the ocean surface due to subglacial runoff. Positive into ocean."
+			 packages="forwardMode;analysisMode"
+		/>
 
 		<var name="windStressZonal" type="real" dimensions="nCells Time" units="N m^-2"
 			 description="Zonal (eastward) component of wind stress at cell centers from coupler. Positive eastward."
@@ -3490,7 +3502,10 @@
 			 description="Divergence of transmission through interfaces of surface fluxes below the surface layer at cell centers. These are applied only to river runoff."
 			 packages="forwardMode;analysisMode"
 		/>
-
+		<var name="fractionAbsorbedSubglacialRunoff" type="real" dimensions="nVertLevels nCells Time" units="fractional"
+			 description="Divergence of transmission through interfaces of surface fluxes below the surface layer at cell centers. These are applied only to subglacial runoff."
+			 packages="forwardMode;analysisMode"
+		/>
 		<!-- Input fields for coupling -->
 		<!-- Coupling fields associated with heat fluxes -->
 		<var name="latentHeatFlux" type="real" dimensions="nCells Time" units="W m^-2"
@@ -3557,12 +3572,24 @@
 			 description="Fresh water flux from river runoff at cell centers from coupler. Positive into the ocean."
 			 packages="thicknessBulkPKG"
 		/>
+		<var name="subglacialRunoffFlux" type="real" dimensions="nCells Time" units="m^3 s^-1"
+			 description="Fresh water flux from subglacial runoff at cell centers from ice sheet model. Positive into the ocean."
+			 packages="thicknessBulkPKG"
+		/>
 		<var name="removedRiverRunoffFlux" type="real" dimensions="nCells Time" units="kg m^-2 s^-1"
 			 description="Fresh water flux from river runoff from the coupler that was removed due to config_remove_AIS_coupler_runoff option. Positive into the ocean."
 			 packages="thicknessBulkPKG"
 		/>
 		<var name="totalRemovedRiverRunoffFlux" type="real" dimensions="Time" units="kg s^-1"
 			 description="Global sum of fresh water flux from river runoff from the coupler that was removed due to config_remove_AIS_coupler_runoff option. Positive into the ocean."
+			 packages="thicknessBulkPKG"
+		/>
+		<var name="removedRiverSubglacialRunoffFlux" type="real" dimensions="nCells Time" units="kg m^-2 s^-1"
+			 description="Fresh water flux from subglacial runoff from the coupler that was removed due to config_remove_AIS_coupler_runoff option. Positive into the ocean."
+			 packages="thicknessBulkPKG"
+		/>
+		<var name="totalRemovedRiverSubglacialRunoffFlux" type="real" dimensions="Time" units="kg s^-1"
+			 description="Global sum of fresh water flux from subglacial runoff from the coupler that was removed due to config_remove_AIS_coupler_runoff option. Positive into the ocean."
 			 packages="thicknessBulkPKG"
 		/>
 		<var name="iceRunoffFlux" type="real" dimensions="nCells Time" units="kg m^-2 s^-1"
