@@ -3341,8 +3341,10 @@ contains
                                              seaIceTemperatureFlux)
       call mpas_pool_get_array(forcingPool, 'icebergTemperatureFlux', &
                                              icebergTemperatureFlux)
-      call mpas_pool_get_array(forcingPool, 'fractionAbsorbedSubglacialRunoff', &
-                                             fractionAbsorbedSubglacialRunoff)
+      call mpas_pool_get_array(forcingPool, 'fractionAbsorbedRunoff', &
+      !                                       fractionAbsorbedRunoff)
+      !call mpas_pool_get_array(forcingPool, 'fractionAbsorbedSubglacialRunoff', &
+      !                                       fractionAbsorbedSubglacialRunoff)
 
       ! allocate scratch space displaced density computation
       ncells = nCellsAll
@@ -3421,7 +3423,7 @@ contains
                            config_flux_attenuation_coefficient_subglacial_runoff))
 
          call mpas_log_write('fracAbsorbedSubglacialRunoff: $r', realArgs=(/fracAbsorbedSubglacialRunoff/))
-         call mpas_log_write('fractionAbsorbedSubglacialRunoff: $r', realArgs=(/fractionAbsorbedSubglacialRunoff(kmin,iCell)/))
+         call mpas_log_write('fractionAbsorbedRunoff: $r', realArgs=(/fractionAbsorbedRunoff(kmin,iCell)/))
 
          ! Store the total tracer flux below in
          ! nonLocalSurfaceTemperatureFlux for use in the CVMix nonlocal
