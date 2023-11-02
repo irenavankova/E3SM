@@ -184,6 +184,8 @@ contains
            end do
         end do
 
+        call mpas_log_write('fractionAbsorbedRunoff assigned')
+
     end subroutine ocn_forcing_build_fraction_absorbed_array!}}}
 
 !***********************************************************************
