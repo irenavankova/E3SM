@@ -38,6 +38,7 @@ module ocn_diagnostics
    use ocn_mesh
    use ocn_surface_land_ice_fluxes
    use ocn_vertical_advection
+   use mpas_log !IV comment
 
    implicit none
    private
@@ -3340,6 +3341,8 @@ contains
                                              seaIceTemperatureFlux)
       call mpas_pool_get_array(forcingPool, 'icebergTemperatureFlux', &
                                              icebergTemperatureFlux)
+      call mpas_pool_get_array(forcingPool, 'fractionAbsorbedSubglacialRunoff', &
+                                             fractionAbsorbedSubglacialRunoff)
 
       ! allocate scratch space displaced density computation
       ncells = nCellsAll
@@ -3416,6 +3419,9 @@ contains
                       - exp( max(-100.0_RKIND, &
                                  -layerThickness(kmin, iCell)/ &
                            config_flux_attenuation_coefficient_subglacial_runoff))
+
+         call mpas_log_write('fracAbsorbedSubglacialRunoff: $r', realArgs=(/fracAbsorbedSubglacialRunoff/))
+         call mpas_log_write('fractionAbsorbedSubglacialRunoff: $r', realArgs=(/fractionAbsorbedSubglacialRunoff(kmin,iCell)/))
 
          ! Store the total tracer flux below in
          ! nonLocalSurfaceTemperatureFlux for use in the CVMix nonlocal
