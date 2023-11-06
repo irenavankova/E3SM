@@ -29,10 +29,6 @@ module ocn_forcing
    use ocn_diagnostics_variables
    use ocn_config
 
-   use mpas_timer
-   use ocn_mesh
-   use ocn_equation_of_state
-
    implicit none
    private
    save
@@ -114,7 +110,7 @@ contains
         !
         !************************************************
 
-        real (kind=RKIND) :: zTop, zBot, transmissionCoeffTop, transmissionCoeffBot
+        real (kind=RKIND) :: zTop, zBot, transmissionCoeffTop, transmissionCoeffBot, config_sgr_flux_vertical_location_index
 
         real (kind=RKIND), dimension(:,:), pointer :: layerThickness, fractionAbsorbed, fractionAbsorbedRunoff, fractionAbsorbedSubglacialRunoff
 
@@ -140,6 +136,7 @@ contains
         call mpas_pool_get_array(forcingPool, 'fractionAbsorbed', fractionAbsorbed)
         call mpas_pool_get_array(forcingPool, 'fractionAbsorbedRunoff', fractionAbsorbedRunoff)
         call mpas_pool_get_array(forcingPool, 'fractionAbsorbedSubglacialRunoff', fractionAbsorbedSubglacialRunoff)
+        call mpas_pool_get_array(forcingPool, 'config_sgr_flux_vertical_location_index', config_sgr_flux_vertical_location_index)
 
         nCells = nCellsArray( 2 )
 
