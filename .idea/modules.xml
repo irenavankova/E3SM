@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/fris_spinup_ref_20231106.iml" filepath="$PROJECT_DIR$/.idea/fris_spinup_ref_20231106.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/fris_and_tides_tbl.iml" filepath="$PROJECT_DIR$/.idea/fris_and_tides_tbl.iml" />
+>>>>>>> bfdf1268da... conflict resolved, kept both
     </modules>
   </component>
 </project>
