@@ -29,6 +29,10 @@ module ocn_forcing
    use ocn_diagnostics_variables
    use ocn_config
 
+   use mpas_timer
+   use ocn_mesh
+   use ocn_equation_of_state
+
    implicit none
    private
    save
