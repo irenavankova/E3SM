@@ -110,9 +110,11 @@ contains
         !
         !************************************************
 
-        real (kind=RKIND) :: zTop, zBot, transmissionCoeffTop, transmissionCoeffBot, config_sgr_flux_vertical_location_index
+        real (kind=RKIND) :: zTop, zBot, transmissionCoeffTop, transmissionCoeffBot
 
         real (kind=RKIND), dimension(:,:), pointer :: layerThickness, fractionAbsorbed, fractionAbsorbedRunoff, fractionAbsorbedSubglacialRunoff
+
+        real (kind=RKIND), pointer :: config_sgr_flux_vertical_location_index
 
         integer :: iCell, k, timeLevel, nCells
 
