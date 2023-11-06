@@ -3246,8 +3246,7 @@ contains
          icebergTemperatureFlux, &
          seaIceTemperatureFlux, &
          surfaceStress, &
-         surfaceStressMagnitude, &
-         fractionAbsorbedSubglacialRunoff
+         surfaceStressMagnitude
 
       real (kind=RKIND), dimension(:,:), pointer ::  &
          layerThickness,           &! layer thickness
@@ -3255,7 +3254,8 @@ contains
          activeTracersSurfaceFlux, &! sfc flux of active tracers (T,S)
          activeTracersSurfaceFluxRunoff, &! flx of tracers in runoff
          activeTracersSurfaceFluxSubglacialRunoff, &! flx of tracers in subglacial runoff
-         nonLocalSurfaceTracerFlux  ! non-local flux of tracers
+         nonLocalSurfaceTracerFlux, &! non-local flux of tracers
+         fractionAbsorbedSubglacialRunoff
 
       real (kind=RKIND), dimension(:,:,:), pointer :: &
          activeTracers  ! array of active tracers
@@ -3344,7 +3344,7 @@ contains
                                              icebergTemperatureFlux)
       call mpas_pool_get_array(forcingPool, 'fractionAbsorbedSubglacialRunoff', &
                                              fractionAbsorbedSubglacialRunoff)
-      call mpas_log_write('I want to crash now'
+      call mpas_log_write('I want to crash now')
 
       ! allocate scratch space displaced density computation
       ncells = nCellsAll
