@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ce327dc6-719f-4fe1-b185-78635ec9e3f1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cime_config/machines/cmake_macros/intel_chicoma-cpu.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cime_config/machines/cmake_macros/intel_chicoma-cpu.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/mpas-ocean/bld/namelist_files/namelist_defaults_mpaso.xml" beforeDir="false" afterPath="$PROJECT_DIR$/components/mpas-ocean/bld/namelist_files/namelist_defaults_mpaso.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cime_config/machines/config_machines.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cime_config/machines/config_machines.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
