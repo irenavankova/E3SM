@@ -171,7 +171,7 @@ contains
 
 !  now do subglacial runoff separately
 
-        if ( trim(config_sgr_flux_vertical_location) == "top" ) then
+        if ( trim(config_sgr_flux_vertical_location) == 'top' ) then
             do iCell = 1, nCells
                zTop = 0.0_RKIND
                transmissionCoeffTop = ocn_forcing_transmission(zTop, surfaceFluxAttenuationCoefficientSubglacialRunoff(iCell))
