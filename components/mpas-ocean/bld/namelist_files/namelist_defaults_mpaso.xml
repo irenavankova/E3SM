@@ -377,7 +377,7 @@
 <config_land_ice_flux_tidal_Jourdain_alpha>1.0</config_land_ice_flux_tidal_Jourdain_alpha>
 <config_land_ice_flux_tidal_Jourdain_A0>0.0</config_land_ice_flux_tidal_Jourdain_A0>
 <config_land_ice_flux_tidal_Jourdain_U0>5e-2</config_land_ice_flux_tidal_Jourdain_U0>
-    
+
 <!-- advection -->
 <config_vert_advection_method>'flux-form'</config_vert_advection_method>
 <config_vert_remap_order>3</config_vert_remap_order>
