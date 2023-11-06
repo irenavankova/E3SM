@@ -1180,7 +1180,7 @@ Valid values: Any positive real number.
 Default: Defined in namelist_defaults.xml
 </entry>
 
-<entry id="config_sgr_flux_vertical_location" type="character"
+<entry id="config_sgr_flux_vertical_location" type="char*1024"
 	category="forcing" group="forcing">
 Selects the vertical location where subglacial runoff is fluxed
 
@@ -1188,7 +1188,7 @@ Valid values: 'top','uniform', 'bottom'.
 Default: Defined in namelist_defaults.xml
 </entry>
 
-<entry id="config_sgr_flux_vertical_location_index" type="integer"
+<entry id="config_sgr_flux_vertical_location_index" type="real"
 	category="forcing" group="forcing">
 Selects the vertical location where subglacial runoff is fluxed
 

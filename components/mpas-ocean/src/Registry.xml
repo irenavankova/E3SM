@@ -703,7 +703,7 @@
 					description="Selects the vertical location where subglacial runoff is fluxed."
 					possible_values="'top','uniform', 'bottom'"
 		/>
-		<nml_option name="config_sgr_flux_vertical_location_index" type="integer" default_value="1"
+		<nml_option name="config_sgr_flux_vertical_location_index" type="real" default_value="1" units="non-dimensional"
 					description="Selects the vertical location where subglacial runoff is fluxed."
 					possible_values="1 (top), 0 (uniform), -1 (bottom)"
 		/>
