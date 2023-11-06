@@ -171,7 +171,8 @@ contains
 
 !  now do subglacial runoff separately
 
-        if ( trim(config_sgr_flux_vertical_location) == 'top' ) then
+        !if ( trim(config_sgr_flux_vertical_location) == 'top' ) then
+        if ( config_sgr_flux_vertical_location_index == 1 ) then
             do iCell = 1, nCells
                zTop = 0.0_RKIND
                transmissionCoeffTop = ocn_forcing_transmission(zTop, surfaceFluxAttenuationCoefficientSubglacialRunoff(iCell))
@@ -185,7 +186,8 @@ contains
                   transmissionCoeffTop = transmissionCoeffBot
                end do
             end do
-        else if ( trim(config_sgr_flux_vertical_location) == 'uniform' ) then
+        !else if ( trim(config_sgr_flux_vertical_location) == 'uniform' ) then
+        else if ( config_sgr_flux_vertical_location_index == 0 ) then
             do iCell = 1, nCells
                ! calculate total thickness
                zTop = 0.0_RKIND
@@ -198,7 +200,8 @@ contains
                   fractionAbsorbedSubglacialRunoff(k, iCell) = layerThickness(k,iCell) / zTop
                end do
             end do
-        else if ( trim(config_sgr_flux_vertical_location) == 'bottom' ) then
+        !else if ( trim(config_sgr_flux_vertical_location) == 'bottom' ) then
+        else if ( config_sgr_flux_vertical_location_index == -1 ) then
             do iCell = 1, nCells
                zTop = 0.0_RKIND
                transmissionCoeffTop = ocn_forcing_transmission(zTop, surfaceFluxAttenuationCoefficientSubglacialRunoff(iCell))
