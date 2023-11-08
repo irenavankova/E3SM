@@ -3433,7 +3433,7 @@ contains
                       - exp( max(-100.0_RKIND, &
                                  -layerThickness(kmin, iCell)/ &
                            config_flux_attenuation_coefficient_runoff))
-         if (config_use_SGR_opt == -1) then
+         if (config_use_sgr_opt == -1) then
                fracAbsorbedSubglacialRunoff = 1.0_RKIND &
                       - exp( max(-100.0_RKIND, &
                                  -layerThickness(kmin, iCell)/ &
