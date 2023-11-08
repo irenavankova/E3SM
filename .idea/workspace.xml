@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="39109800-f0fb-48ea-88dc-c4bb511938f4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/tide_tbl_20231005.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/fris_and_tides_tbl.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cime_config/config_grids.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cime_config/config_grids.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/mpas-ocean/bld/namelist_files/namelist_defaults_mpaso.xml" beforeDir="false" afterPath="$PROJECT_DIR$/components/mpas-ocean/bld/namelist_files/namelist_defaults_mpaso.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/mpas-ocean/cime_config/buildnml" beforeDir="false" afterPath="$PROJECT_DIR$/components/mpas-ocean/cime_config/buildnml" afterDir="false" />
