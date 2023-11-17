@@ -856,7 +856,8 @@ contains
                                   tracerGroupSurfaceFluxRunoff, &
                                   tracerGroupSurfaceFluxSubglacialRunoff, &
                                   tracerGroupSurfaceFluxRemoved, &
-                                  dt, layerThickness, err)
+                                  dt, layerThickness, &
+                                  indxTemp, indxSalt, activeTracers, err)
 
          end if ! sfc bulk forcing
 

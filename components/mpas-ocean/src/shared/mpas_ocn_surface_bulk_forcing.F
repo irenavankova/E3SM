@@ -78,7 +78,8 @@ contains
 !-----------------------------------------------------------------------
 
    subroutine ocn_surface_bulk_forcing_tracers(meshPool, groupName, forcingPool, tracerGroup,   &
-      tracersSurfaceFlux, tracersSurfaceFluxRunoff, tracersSurfaceFluxSubglacialRunoff, tracersSurfaceFluxRemoved, dt, layerThickness, err)!{{{
+      tracersSurfaceFlux, tracersSurfaceFluxRunoff, tracersSurfaceFluxSubglacialRunoff, tracersSurfaceFluxRemoved, dt, layerThickness, &
+      indxTemp, indxSalt, activeTracers, err)!{{{
 
       !-----------------------------------------------------------------
       !
@@ -87,6 +88,13 @@ contains
       !-----------------------------------------------------------------
       type (mpas_pool_type), intent(in) :: meshPool !< Input: mesh information
       character (len=*) :: groupName !< Input: Name of tracer group
+
+      integer, intent(in) :: &
+         indxTemp,              &!< [in] tracer array index for temperature
+         indxSalt                !< [in] tracer array index for salt
+
+      real (kind=RKIND), dimension(:,:,:), intent(in) :: &
+         activeTracers               !< [in] array of active tracers
 
       !-----------------------------------------------------------------
       !
