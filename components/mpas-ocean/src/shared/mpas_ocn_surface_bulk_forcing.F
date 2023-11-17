@@ -132,7 +132,8 @@ contains
       call mpas_timer_start("bulk_" // trim(groupName))
       if ( trim(groupName) == 'activeTracers' ) then
          call ocn_surface_bulk_forcing_active_tracers(meshPool, forcingPool, tracerGroup,  &
-            tracersSurfaceFlux, tracersSurfaceFluxRunoff, tracersSurfaceFluxSubglacialRunoff, tracersSurfaceFluxRemoved, layerThickness, dt, err)
+            tracersSurfaceFlux, tracersSurfaceFluxRunoff, tracersSurfaceFluxSubglacialRunoff, tracersSurfaceFluxRemoved, layerThickness, dt, &
+            indxTemp, indxSalt, activeTracers, err)
       end if
       call mpas_timer_stop("bulk_" // trim(groupName))
 
@@ -436,14 +437,21 @@ contains
 !-----------------------------------------------------------------------
 
    subroutine ocn_surface_bulk_forcing_active_tracers(meshPool, forcingPool, tracerGroup,  &
-      tracersSurfaceFlux, tracersSurfaceFluxRunoff, tracersSurfaceFluxSubglacialRunoff, tracersSurfaceFluxRemoved, layerThickness, dt, err)!{{{
-
+      tracersSurfaceFlux, tracersSurfaceFluxRunoff, tracersSurfaceFluxSubglacialRunoff, tracersSurfaceFluxRemoved, layerThickness, dt, &
+      indxTemp, indxSalt, activeTracers, err)!{{{
       !-----------------------------------------------------------------
       !
       ! input variables
       !
       !-----------------------------------------------------------------
       type (mpas_pool_type), intent(in) :: meshPool !< Input: mesh information
+
+      integer, intent(in) :: &
+         indxTemp,              &!< [in] tracer array index for temperature
+         indxSalt                !< [in] tracer array index for salt
+
+      real (kind=RKIND), dimension(:,:,:), intent(in) :: &
+         activeTracers               !< [in] array of active tracers
 
       !-----------------------------------------------------------------
       !
@@ -490,6 +498,7 @@ contains
                                                   totalFreshWaterTemperatureFlux
       real (kind=RKIND), dimension(:), pointer :: landIcePressure
       real (kind=RKIND) :: requiredSalt, allowedSalt, surfaceTemperatureFluxWithoutRunoff
+      real (kind=RKIND) :: salt_current, temp_current
 
       err = 0
 
@@ -585,6 +594,8 @@ contains
            ! Runoff can only have a minimum temperature of 0.0C, since it is fresh water.
            tracersSurfaceFluxRunoff(index_temperature_flux,iCell) = riverRunoffFlux(iCell) &
                       * max(tracerGroup(index_temperature_flux,minLevelCell(iCell),iCell), 0.0_RKIND) / rho_sw
+
+           salt_current = activeTracers(indxSalt,minLevelCell(iCell)  ,iCell)
 
            if ( trim(config_use_sgr_opt_temp) == 'prescribed' ) then
                !sgr with fixed prescribed temperature (for debugging only)
