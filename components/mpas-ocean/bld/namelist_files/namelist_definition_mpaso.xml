@@ -1212,7 +1212,7 @@ Valid values: 'sgr','current', 'prescribed'.
 Default: Defined in namelist_defaults.xml
 </entry>
 
-<entry id="config_sgr_temperature" type="char*1024"
+<entry id="config_sgr_temperature" type="real"
 	category="forcing" group="forcing">
 Option to choose sgr temperature, applied when config_use_sgr_opt_temp = 'prescribed'
 
@@ -1220,7 +1220,7 @@ Valid values: Any real number.
 Default: Defined in namelist_defaults.xml
 </entry>
 
-<entry id="config_sgr_salinity" type="char*1024"
+<entry id="config_sgr_salinity" type="real"
 	category="forcing" group="forcing">
 Option to choose sgr salinity, applied when config_use_sgr_opt_temp = 'prescribed'
 
