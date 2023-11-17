@@ -594,9 +594,7 @@ contains
            ! Runoff can only have a minimum temperature of 0.0C, since it is fresh water.
            tracersSurfaceFluxRunoff(index_temperature_flux,iCell) = riverRunoffFlux(iCell) &
                       * max(tracerGroup(index_temperature_flux,minLevelCell(iCell),iCell), 0.0_RKIND) / rho_sw
-
-           salt_current = activeTracers(indxSalt,minLevelCell(iCell)  ,iCell)
-
+                      
            if ( trim(config_use_sgr_opt_temp) == 'prescribed' ) then
                !sgr with fixed prescribed temperature (for debugging only)
                tracersSurfaceFluxSubglacialRunoff(index_temperature_flux,iCell) = subglacialRunoffFlux(iCell) * &
