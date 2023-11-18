@@ -29,6 +29,7 @@ module ocn_surface_bulk_forcing
    use ocn_config
    use ocn_mesh
    use ocn_equation_of_state
+   use mpas_log !IV comment
 
    implicit none
    private
@@ -594,7 +595,15 @@ contains
            ! Runoff can only have a minimum temperature of 0.0C, since it is fresh water.
            tracersSurfaceFluxRunoff(index_temperature_flux,iCell) = riverRunoffFlux(iCell) &
                       * max(tracerGroup(index_temperature_flux,minLevelCell(iCell),iCell), 0.0_RKIND) / rho_sw
-                      
+
+           call mpas_log_write('I want to crash now')
+           call mpas_log_write('iCell: $i', intArgs=(/iCell/))
+           call mpas_log_write('indxSalt: $i', intArgs=(/indxSalt/))
+           call mpas_log_write('maxLevelCell(iCell): $i', intArgs=(/maxLevelCell(iCell)/))
+           call mpas_log_write('minLevelCell(iCell): $i', intArgs=(/minLevelCell(iCell)/))
+           salt_current = 0.0_RKIND
+           call mpas_log_write('salt_current: $r', realArgs=(/salt_current/))
+
            if ( trim(config_use_sgr_opt_temp) == 'prescribed' ) then
                !sgr with fixed prescribed temperature (for debugging only)
                tracersSurfaceFluxSubglacialRunoff(index_temperature_flux,iCell) = subglacialRunoffFlux(iCell) * &
