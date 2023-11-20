@@ -849,6 +849,23 @@ contains
          ! compute surface tracer flux from bulk forcing
          !
          if (config_use_tracerGroup_surface_bulk_forcing) then
+            integer ::   nCells ! number of cells participating
+            integer, dimension(:), pointer :: nCellsArray
+            real (kind=RKIND) :: salt_current
+            call mpas_pool_get_dimension(meshPool, 'nCellsArray', nCellsArray)
+            nCells = nCellsArray( 3 )
+            do iCell = 1, nCells
+                call mpas_log_write('I want to crash now in tendency')
+                call mpas_log_write('iCell: $i', intArgs=(/iCell/))
+                call mpas_log_write('indxSalt: $i', intArgs=(/indxSalt/))
+                call mpas_log_write('maxLevelCell(iCell): $i', intArgs=(/maxLevelCell(iCell)/))
+                call mpas_log_write('minLevelCell(iCell): $i', intArgs=(/minLevelCell(iCell)/))
+                salt_current = 0.0_RKIND
+                if (iCell > 0 .and. indxSalt > 0 .and. minLevelCell(iCell) > 0) then
+                    salt_current = activeTracers(indxSalt,maxLevelCell(iCell)  ,iCell)
+                end if
+                call mpas_log_write('salt_current: $r', realArgs=(/salt_current/))
+            end do
 
             call ocn_surface_bulk_forcing_tracers(meshPool, groupName, &
                                   forcingPool, tracerGroup, &
