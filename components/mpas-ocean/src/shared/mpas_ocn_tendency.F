@@ -641,7 +641,9 @@ contains
       !-----------------------------------------------------------------
       ! Begin code
 
-      call mpas_pool_get_dimension(meshPool, 'nCellsArray', nCellsArray) 
+      call mpas_pool_get_dimension(meshPool, 'nCellsArray', nCellsArray)
+      call mpas_pool_get_array(tracersPool, 'activeTracers', &
+                                             activeTracers, timeLevel)
 
       ! return if all tracer tendencies disabled
       ! otherwise start timer and proceed
