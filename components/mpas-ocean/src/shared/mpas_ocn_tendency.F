@@ -310,8 +310,9 @@ contains
          iEdge, iCell, k,  &! loop indices for edge, cell and vertical
          indxTemp,         &! tracer index for temperature
          indxSalt,         &! tracer index for salinity
-         timeLevel          ! time level to use for state variables
-
+         timeLevel,        &! time level to use for state variables
+         cell1, cell2,     &! neighbor cell indices across edge
+         kMin, kMax         ! shallowest and deepest active layer
       ! various pointers for array retrievals
 
       integer, pointer :: indexTemperature, indexSalinity
@@ -435,6 +436,19 @@ contains
                              vertAleTransportTop, tendVel, err)
 
       ! Add pressure gradient
+        do iEdge=1,nEdgesOwned
+            cell1 = cellsOnEdge(1,iEdge)
+            do k=minLevelEdgeBot(iEdge)+1,maxLevelEdgeTop(iEdge)
+                call mpas_log_write('I want to crash now in tendency')
+                call mpas_log_write('cell1: $i', intArgs=(/cell1/))
+                call mpas_log_write('iEdge: $i', intArgs=(/iEdge/))
+                call mpas_log_write('indxSalt: $i', intArgs=(/indxSalt/))
+                call mpas_log_write('minLevelEdgeBot(iEdge): $i', intArgs=(/minLevelEdgeBot(iEdge)/))
+                call mpas_log_write('maxLevelEdgeTop(iEdge): $i', intArgs=(/maxLevelEdgeTop(iEdge)/))
+                call mpas_log_write('k: $i', intArgs=(/k/))
+                mpas_log_write('activeTracers(indxSalt,k  ,cell1): $r', realArgs=(/activeTracers(indxSalt,k  ,cell1)/))
+            end do
+        end do
       call ocn_vel_pressure_grad_tend(ssh, pressure, surfacePressure, &
                                montgomeryPotential, zMid, &
                                density, potentialDensity, &
@@ -858,19 +872,19 @@ contains
          ! compute surface tracer flux from bulk forcing
          !
          if (config_use_tracerGroup_surface_bulk_forcing) then
-            nCells = nCellsArray( 3 )
-            do iCell = 1, nCells
-                call mpas_log_write('I want to crash now in tendency')
-                call mpas_log_write('iCell: $i', intArgs=(/iCell/))
-                call mpas_log_write('indxSalt: $i', intArgs=(/indxSalt/))
-                call mpas_log_write('maxLevelCell(iCell): $i', intArgs=(/maxLevelCell(iCell)/))
-                call mpas_log_write('minLevelCell(iCell): $i', intArgs=(/minLevelCell(iCell)/))
-                salt_current = 0.0_RKIND
-                if (iCell > 0 .and. indxSalt > 0 .and. minLevelCell(iCell) > 0) then
-                    salt_current = activeTracers(indxSalt,maxLevelCell(iCell)  ,iCell)
-                end if
-                call mpas_log_write('salt_current: $r', realArgs=(/salt_current/))
-            end do
+            !nCells = nCellsArray( 3 )
+            !do iCell = 1, nCells
+            !    call mpas_log_write('I want to crash now in tendency')
+            !    call mpas_log_write('iCell: $i', intArgs=(/iCell/))
+            !    call mpas_log_write('indxSalt: $i', intArgs=(/indxSalt/))
+            !    call mpas_log_write('maxLevelCell(iCell): $i', intArgs=(/maxLevelCell(iCell)/))
+            !    call mpas_log_write('minLevelCell(iCell): $i', intArgs=(/minLevelCell(iCell)/))
+            !    salt_current = 0.0_RKIND
+            !    if (iCell > 0 .and. indxSalt > 0 .and. minLevelCell(iCell) > 0) then
+            !        salt_current = activeTracers(indxSalt,maxLevelCell(iCell)  ,iCell)
+            !    end if
+            !    call mpas_log_write('salt_current: $r', realArgs=(/salt_current/))
+            !end do
 
             call ocn_surface_bulk_forcing_tracers(meshPool, groupName, &
                                   forcingPool, tracerGroup, &
