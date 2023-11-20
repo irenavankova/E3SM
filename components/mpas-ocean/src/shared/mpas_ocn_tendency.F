@@ -32,6 +32,7 @@ module ocn_tendency
    use ocn_constants
    use ocn_config
    use ocn_mesh
+   use mpas_log !IV comment
 
    use ocn_surface_bulk_forcing
    use ocn_surface_land_ice_fluxes
@@ -632,9 +633,15 @@ contains
       real (kind=RKIND), dimension(:,:), allocatable :: &
          normalThicknessFlux ! Flux of thickness through edge (m^2/s)
 
+      integer ::   nCells ! number of cells participating
+      integer, dimension(:), pointer :: nCellsArray
+      real (kind=RKIND) :: salt_current
+
       ! End preamble
       !-----------------------------------------------------------------
       ! Begin code
+
+      call mpas_pool_get_dimension(meshPool, 'nCellsArray', nCellsArray) 
 
       ! return if all tracer tendencies disabled
       ! otherwise start timer and proceed
@@ -849,10 +856,6 @@ contains
          ! compute surface tracer flux from bulk forcing
          !
          if (config_use_tracerGroup_surface_bulk_forcing) then
-            integer ::   nCells ! number of cells participating
-            integer, dimension(:), pointer :: nCellsArray
-            real (kind=RKIND) :: salt_current
-            call mpas_pool_get_dimension(meshPool, 'nCellsArray', nCellsArray)
             nCells = nCellsArray( 3 )
             do iCell = 1, nCells
                 call mpas_log_write('I want to crash now in tendency')
