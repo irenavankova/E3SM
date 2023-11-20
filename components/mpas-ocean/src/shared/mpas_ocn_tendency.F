@@ -446,7 +446,7 @@ contains
                 call mpas_log_write('minLevelEdgeBot(iEdge): $i', intArgs=(/minLevelEdgeBot(iEdge)/))
                 call mpas_log_write('maxLevelEdgeTop(iEdge): $i', intArgs=(/maxLevelEdgeTop(iEdge)/))
                 call mpas_log_write('k: $i', intArgs=(/k/))
-                mpas_log_write('activeTracers(indxSalt,k  ,cell1): $r', realArgs=(/activeTracers(indxSalt,k  ,cell1)/))
+                call mpas_log_write('activeTracers(indxSalt,k  ,cell1): $r', realArgs=(/activeTracers(indxSalt,k  ,cell1)/))
             end do
         end do
       call ocn_vel_pressure_grad_tend(ssh, pressure, surfacePressure, &
