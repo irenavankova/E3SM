@@ -436,19 +436,19 @@ contains
                              vertAleTransportTop, tendVel, err)
 
       ! Add pressure gradient
-        do iEdge=1,nEdgesOwned
-            cell1 = cellsOnEdge(1,iEdge)
-            do k=minLevelEdgeBot(iEdge)+1,maxLevelEdgeTop(iEdge)
-                call mpas_log_write('I want to crash now in tendency')
-                call mpas_log_write('cell1: $i', intArgs=(/cell1/))
-                call mpas_log_write('iEdge: $i', intArgs=(/iEdge/))
-                call mpas_log_write('indxSalt: $i', intArgs=(/indxSalt/))
-                call mpas_log_write('minLevelEdgeBot(iEdge): $i', intArgs=(/minLevelEdgeBot(iEdge)/))
-                call mpas_log_write('maxLevelEdgeTop(iEdge): $i', intArgs=(/maxLevelEdgeTop(iEdge)/))
-                call mpas_log_write('k: $i', intArgs=(/k/))
-                call mpas_log_write('activeTracers(indxSalt,k  ,cell1): $r', realArgs=(/activeTracers(indxSalt,k  ,cell1)/))
-            end do
-        end do
+      !  do iEdge=1,nEdgesOwned
+      !      cell1 = cellsOnEdge(1,iEdge)
+      !      do k=minLevelEdgeBot(iEdge)+1,maxLevelEdgeTop(iEdge)
+      !          call mpas_log_write('I want to crash now in tendency')
+      !          call mpas_log_write('cell1: $i', intArgs=(/cell1/))
+      !          call mpas_log_write('iEdge: $i', intArgs=(/iEdge/))
+      !          call mpas_log_write('indxSalt: $i', intArgs=(/indxSalt/))
+      !          call mpas_log_write('minLevelEdgeBot(iEdge): $i', intArgs=(/minLevelEdgeBot(iEdge)/))
+      !          call mpas_log_write('maxLevelEdgeTop(iEdge): $i', intArgs=(/maxLevelEdgeTop(iEdge)/))
+      !          call mpas_log_write('k: $i', intArgs=(/k/))
+      !          call mpas_log_write('activeTracers(indxSalt,k  ,cell1): $r', realArgs=(/activeTracers(indxSalt,k  ,cell1)/))
+      !      end do
+      !  end do
       call ocn_vel_pressure_grad_tend(ssh, pressure, surfacePressure, &
                                montgomeryPotential, zMid, &
                                density, potentialDensity, &

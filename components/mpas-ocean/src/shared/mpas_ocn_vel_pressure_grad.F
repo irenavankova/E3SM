@@ -525,6 +525,12 @@ contains
                      tracers(indxT,k-1,cell2)*(zGamma-zMid(k  ,cell2)))/ &
                     (zMid(k-1,cell2) - zMid(k,cell2))
 
+               call mpas_log_write('I want to crash now in mpas_ocn_vel_pressure')
+               call mpas_log_write('indxT: $i', intArgs=(/indxT/))
+               call mpas_log_write('k: $i', intArgs=(/k/))
+               call mpas_log_write('cell1: $i', intArgs=(/cell1/))
+               call mpas_log_write('tracers(indxT,k  ,cell1): $r', realArgs=(/tracers(indxT,k  ,cell1)/))
+
                SL = (tracers(indxS,k  ,cell1)*(zMid(k-1,cell1)-zGamma) + &
                      tracers(indxS,k-1,cell1)*(zGamma-zMid(k  ,cell1)))/ &
                     (zMid(k-1,cell1) - zMid(k,cell1))
