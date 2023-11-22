@@ -832,8 +832,10 @@ v=accumulatedIcebergTemperatureFlux*rho_sw*cp_sw; write(m,"('IcebergTemperatureF
            accumulatedEvaporationFlux, &
            accumulatedSeaIceFlux, &
            accumulatedRiverRunoffFlux, &
+           accumulatedSubglacialRunoffFlux, &
            accumulatedIceRunoffFlux, &
            accumulatedRemovedRiverRunoffFlux, &
+           accumulatedRemovedSubglacialRunoffFlux, &
            accumulatedRemovedIceRunoffFlux, &
            accumulatedIcebergFlux, &
            accumulatedFrazilFlux, &
@@ -856,8 +858,10 @@ v=accumulatedIcebergTemperatureFlux*rho_sw*cp_sw; write(m,"('IcebergTemperatureF
            evaporationFlux, &
            seaIceFreshwaterFlux, &
            riverRunoffFlux, &
+           subglacialRunoffFlux, &
            iceRunoffFlux, &
            removedRiverRunoffFlux, &
+           removedSubglacialRunoffFlux, &
            removedIceRunoffFlux, &
            icebergFreshwaterFlux, &
            accumulatedFrazilIceMassNew, &
@@ -881,7 +885,7 @@ v=accumulatedIcebergTemperatureFlux*rho_sw*cp_sw; write(m,"('IcebergTemperatureF
            iCell, ierr, k
 
       integer, parameter :: &
-           nSums = 12
+           nSums = 14
 
       integer, dimension(:), pointer :: minLevelCell, maxLevelCell
 
@@ -904,8 +908,10 @@ v=accumulatedIcebergTemperatureFlux*rho_sw*cp_sw; write(m,"('IcebergTemperatureF
       call MPAS_pool_get_array(conservationCheckMassAMPool, "accumulatedEvaporationFlux",       accumulatedEvaporationFlux)
       call MPAS_pool_get_array(conservationCheckMassAMPool, "accumulatedSeaIceFlux",            accumulatedSeaIceFlux)
       call MPAS_pool_get_array(conservationCheckMassAMPool, "accumulatedRiverRunoffFlux",       accumulatedRiverRunoffFlux)
+      call MPAS_pool_get_array(conservationCheckMassAMPool, "accumulatedSubglacialRunoffFlux",  accumulatedSubglacialRunoffFlux)
       call MPAS_pool_get_array(conservationCheckMassAMPool, "accumulatedIceRunoffFlux",         accumulatedIceRunoffFlux)
       call MPAS_pool_get_array(conservationCheckMassAMPool, "accumulatedRemovedRiverRunoffFlux",accumulatedRemovedRiverRunoffFlux)
+      call MPAS_pool_get_array(conservationCheckMassAMPool, "accumulatedRemovedSubglacialRunoffFlux",accumulatedRemovedSubglacialRunoffFlux)
       call MPAS_pool_get_array(conservationCheckMassAMPool, "accumulatedRemovedIceRunoffFlux",  accumulatedRemovedIceRunoffFlux)
       call MPAS_pool_get_array(conservationCheckMassAMPool, "accumulatedIcebergFlux",           accumulatedIcebergFlux)
       call MPAS_pool_get_array(conservationCheckMassAMPool, "accumulatedFrazilFlux",            accumulatedFrazilFlux)
@@ -941,8 +947,10 @@ v=accumulatedIcebergTemperatureFlux*rho_sw*cp_sw; write(m,"('IcebergTemperatureF
             call mpas_pool_get_array(forcingPool, 'evaporationFlux',        evaporationFlux)
             call mpas_pool_get_array(forcingPool, 'seaIceFreshWaterFlux',   seaIceFreshwaterFlux)
             call mpas_pool_get_array(forcingPool, 'riverRunoffFlux',        riverRunoffFlux)
+            call mpas_pool_get_array(forcingPool, 'subglacialRunoffFlux',   subglacialRunoffFlux)
             call mpas_pool_get_array(forcingPool, 'iceRunoffFlux',          iceRunoffFlux)
             call mpas_pool_get_array(forcingPool, 'removedRiverRunoffFlux', removedRiverRunoffFlux)
+            call mpas_pool_get_array(forcingPool, 'removedSubglacialRunoffFlux', removedSubglacialRunoffFlux)
             call mpas_pool_get_array(forcingPool, 'removedIceRunoffFlux',   removedIceRunoffFlux)
             call mpas_pool_get_array(forcingPool, 'icebergFreshWaterFlux',  icebergFreshwaterFlux)
             call mpas_pool_get_array(forcingPool, 'landIceFreshwaterFlux',  landIceFreshwaterFlux)
@@ -960,6 +968,8 @@ v=accumulatedIcebergTemperatureFlux*rho_sw*cp_sw; write(m,"('IcebergTemperatureF
                 sumArray( 7) = sumArray( 7) + areaCell(iCell) * removedRiverRunoffFlux(iCell)
                 sumArray( 8) = sumArray( 8) + areaCell(iCell) * removedIceRunoffFlux(iCell)
                 sumArray( 9) = sumArray( 9) + areaCell(iCell) * icebergFreshwaterFlux(iCell)
+                sumArray(13) = sumArray(13) + areaCell(iCell) * subglacialRunoffFlux(iCell)
+                sumArray(14) = sumArray(14) + areaCell(iCell) * removedSubglacialRunoffFlux(iCell)
             enddo
 
             if (config_use_frazil_ice_formation) then
@@ -1008,6 +1018,8 @@ v=accumulatedIcebergTemperatureFlux*rho_sw*cp_sw; write(m,"('IcebergTemperatureF
          accumulatedFrazilFlux             = accumulatedFrazilFlux             + sumArrayOut(10)
          accumulatedLandIceFlux            = accumulatedLandIceFlux            + sumArrayOut(11)
          accumulatedLandIceFrazilFlux      = accumulatedLandIceFrazilFlux      + sumArrayOut(12)
+         accumulatedSubglacialRunoffFlux   = accumulatedSubglacialRunoffFlux   + sumArrayOut(13)
+         accumulatedRemovedSubglacialRunoffFlux = accumulatedRemovedSubglacialRunoffFlux + sumArrayOut(14)
 
          ! cleanup
          deallocate(sumArray)
@@ -1027,8 +1039,10 @@ v=accumulatedIcebergTemperatureFlux*rho_sw*cp_sw; write(m,"('IcebergTemperatureF
          accumulatedEvaporationFlux        = accumulatedEvaporationFlux        /accumulatedFluxCounter
          accumulatedSeaIceFlux             = accumulatedSeaIceFlux             /accumulatedFluxCounter
          accumulatedRiverRunoffFlux        = accumulatedRiverRunoffFlux        /accumulatedFluxCounter
+         accumulatedSubglacialRunoffFlux   = accumulatedSubglacialRunoffFlux   /accumulatedFluxCounter
          accumulatedIceRunoffFlux          = accumulatedIceRunoffFlux          /accumulatedFluxCounter
          accumulatedRemovedRiverRunoffFlux = accumulatedRemovedRiverRunoffFlux /accumulatedFluxCounter
+         accumulatedRemovedSubglacialRunoffFlux = accumulatedRemovedSubglacialRunoffFlux /accumulatedFluxCounter
          accumulatedRemovedIceRunoffFlux   = accumulatedRemovedIceRunoffFlux   /accumulatedFluxCounter
          accumulatedIcebergFlux            = accumulatedIcebergFlux            /accumulatedFluxCounter
          accumulatedFrazilFlux             = accumulatedFrazilFlux             /accumulatedFluxCounter
@@ -1055,6 +1069,7 @@ v=accumulatedIcebergTemperatureFlux*rho_sw*cp_sw; write(m,"('IcebergTemperatureF
               + accumulatedEvaporationFlux &
               + accumulatedSeaIceFlux &
               + accumulatedRiverRunoffFlux &
+              + accumulatedSubglacialRunoffFlux &
               + accumulatedIceRunoffFlux &
               + accumulatedIcebergFlux &
               + accumulatedFrazilFlux &
@@ -1089,10 +1104,15 @@ v=accumulatedSnowFlux              ; write(m,"('snowFlux               ',es16.8,
 v=accumulatedIcebergFlux           ; write(m,"('icebergFreshwaterFlux  ',es16.8,' x2o_Fioi_bergw   wberg          ',f16.8)") v,v*c; call mpas_log_write(m); s=s+v
 v=accumulatedEvaporationFlux       ; write(m,"('evaporationFlux        ',es16.8,' x2o_Foxx_evap    wevap          ',f16.8)") v,v*c; call mpas_log_write(m); s=s+v
 v=accumulatedRiverRunoffFlux       ; write(m,"('riverRunoffFlux        ',es16.8,' x2o_Foxx_rofl    wrunoff        ',f16.8)") v,v*c; call mpas_log_write(m); s=s+v
+v=accumulatedSubglacialRunoffFlux  ; write(m,"('subglacialRunoffFlux   ',es16.8,' x2o_Foxx_rofl    wsgr        ',f16.8)") v,v*c; call mpas_log_write(m); s=s+v
+
             if (landIceFreshwaterFluxesOn) then
 v=accumulatedRemovedRiverRunoffFlux; write(m,"('removedRiverRunoffFlux ',es16.8,'                  wrunoff                        ',f16.8)") v,v*c; call mpas_log_write(m);
 v=accumulatedRiverRunoffFlux+accumulatedRemovedRiverRunoffFlux;
                                      write(m,"('      SUM: river runoff',es16.8,' x2o_Foxx_rofl    wrunoff SUM                    ',f16.8)") v,v*c; call mpas_log_write(m)
+v=accumulatedRemovedSubglacialRunoffFlux; write(m,"('removedSubglacialRunoffFlux ',es16.8,'        wsgr                        ',f16.8)") v,v*c; call mpas_log_write(m);
+v=accumulatedSubglacialRunoffFlux+accumulatedRemovedSubglacialRunoffFlux;
+                                     write(m,"('      SUM: subglacial runoff',es16.8,' x2o_Foxx_rofl wsgr SUM                    ',f16.8)") v,v*c; call mpas_log_write(m)
             endif
 v=accumulatedIceRunoffFlux         ; write(m,"('iceRunoffFlux          ',es16.8,' x2o_Foxx_rofi    wfrzrof        ',f16.8)") v,v*c; call mpas_log_write(m); s=s+v
             if (landIceFreshwaterFluxesOn) then
@@ -2256,8 +2276,10 @@ v=accumulatedLandIceFrazilSalinityFlux; write(m,"('LandIceFrazilSalinityFlux',es
            accumulatedEvaporationFlux, &
            accumulatedSeaIceFlux, &
            accumulatedRiverRunoffFlux, &
+           accumulatedSubglacialRunoffFlux, &
            accumulatedIceRunoffFlux, &
            accumulatedRemovedRiverRunoffFlux, &
+           accumulatedRemovedSubglacialRunoffFlux, &
            accumulatedRemovedIceRunoffFlux, &
            accumulatedIcebergFlux, &
            accumulatedFrazilFlux, &
@@ -2327,8 +2349,10 @@ v=accumulatedLandIceFrazilSalinityFlux; write(m,"('LandIceFrazilSalinityFlux',es
        call MPAS_pool_get_array(conservationCheckMassAMPool, "accumulatedEvaporationFlux",       accumulatedEvaporationFlux)
        call MPAS_pool_get_array(conservationCheckMassAMPool, "accumulatedSeaIceFlux",            accumulatedSeaIceFlux)
        call MPAS_pool_get_array(conservationCheckMassAMPool, "accumulatedRiverRunoffFlux",       accumulatedRiverRunoffFlux)
+       call MPAS_pool_get_array(conservationCheckMassAMPool, "accumulatedSubglacialRunoffFlux",  accumulatedSubglacialRunoffFlux)
        call MPAS_pool_get_array(conservationCheckMassAMPool, "accumulatedIceRunoffFlux",         accumulatedIceRunoffFlux)
        call MPAS_pool_get_array(conservationCheckMassAMPool, "accumulatedRemovedRiverRunoffFlux",accumulatedRemovedRiverRunoffFlux)
+       call MPAS_pool_get_array(conservationCheckMassAMPool, "accumulatedRemovedSubglacialRunoffFlux",accumulatedRemovedSubglacialRunoffFlux)
        call MPAS_pool_get_array(conservationCheckMassAMPool, "accumulatedRemovedIceRunoffFlux",  accumulatedRemovedIceRunoffFlux)
        call MPAS_pool_get_array(conservationCheckMassAMPool, "accumulatedIcebergFlux",           accumulatedIcebergFlux)
        call MPAS_pool_get_array(conservationCheckMassAMPool, "accumulatedFrazilFlux",            accumulatedFrazilFlux)
@@ -2340,8 +2364,10 @@ v=accumulatedLandIceFrazilSalinityFlux; write(m,"('LandIceFrazilSalinityFlux',es
        accumulatedEvaporationFlux        = 0.0_RKIND
        accumulatedSeaIceFlux             = 0.0_RKIND
        accumulatedRiverRunoffFlux        = 0.0_RKIND
+       accumulatedSubglacialRunoffFlux   = 0.0_RKIND
        accumulatedIceRunoffFlux          = 0.0_RKIND
        accumulatedRemovedRiverRunoffFlux = 0.0_RKIND
+       accumulatedRemovedSubglacialRunoffFlux = 0.0_RKIND
        accumulatedRemovedIceRunoffFlux   = 0.0_RKIND
        accumulatedIcebergFlux            = 0.0_RKIND
        accumulatedFrazilFlux             = 0.0_RKIND
