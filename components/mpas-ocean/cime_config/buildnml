@@ -273,6 +273,8 @@ def buildnml(case, caseroot, compname):
             ic_prefix = 'mpaso.SOwISC12to60E2r4.rstFromG-anvil'
         if ocn_ismf == 'data':
             data_ismf_file = 'prescribed_ismf_adusumilli2020.SOwISC12to60E2r4.230516.nc'
+        if ocn_sgr == 'data':
+            data_sgr_file = 'SOwISC12to60E2r4_DSGR.nc'
 
     elif ocn_grid == 'FRISwISC08to60E3r1':
         decomp_date = '20230913'  # changed to date of partiotions in ../files_for_e3sm/assembled_files/inputdata/ocn/mpas-o/FRISwISC08to60E3r1/partitions
