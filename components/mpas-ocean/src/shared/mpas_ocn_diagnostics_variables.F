@@ -81,6 +81,7 @@ module ocn_diagnostics_variables
 
    real (kind=RKIND), dimension(:), pointer :: sfcFlxAttCoeff
    real (kind=RKIND), dimension(:), pointer :: surfaceFluxAttenuationCoefficientRunoff
+   real (kind=RKIND), dimension(:), pointer :: surfaceFluxAttenuationCoefficientSubglacialRunoff
 
    real (kind=RKIND), dimension(:), pointer :: landIceFrictionVelocity
    real (kind=RKIND), dimension(:), pointer :: topDrag
@@ -620,6 +621,9 @@ contains
                'surfaceFluxAttenuationCoefficientRunoff', &
                 surfaceFluxAttenuationCoefficientRunoff)
       call mpas_pool_get_array(diagnosticsPool, &
+               'surfaceFluxAttenuationCoefficientSubglacialRunoff', &
+                surfaceFluxAttenuationCoefficientSubglacialRunoff)
+      call mpas_pool_get_array(diagnosticsPool, &
                'boundaryLayerDepth', &
                 boundaryLayerDepth)
       call mpas_pool_get_array(diagnosticsPool, &
@@ -891,7 +895,8 @@ contains
       !$acc                   Time_bnds,                               &
       !$acc                   simulationStartTime,                     &
       !$acc                   boundaryLayerDepthSmooth,                &
-      !$acc                   surfaceFluxAttenuationCoefficientRunoff  &
+      !$acc                   surfaceFluxAttenuationCoefficientRunoff, &
+      !$acc                   surfaceFluxAttenuationCoefficientSubglacialRunoff  &
       !$acc                   )
 
     end subroutine ocn_diagnostics_variables_init!}}}
@@ -1138,7 +1143,8 @@ contains
       !$acc                   Time_bnds,                               &
       !$acc                   simulationStartTime,                     &
       !$acc                   boundaryLayerDepthSmooth,                &
-      !$acc                   surfaceFluxAttenuationCoefficientRunoff  &
+      !$acc                   surfaceFluxAttenuationCoefficientRunoff, &
+      !$acc                   surfaceFluxAttenuationCoefficientSubglacialRunoff  &
       !$acc                   )
 
       ! Nullify pointers
@@ -1330,7 +1336,8 @@ contains
               Time_bnds,                               &
               simulationStartTime,                     &
               boundaryLayerDepthSmooth,                &
-              surfaceFluxAttenuationCoefficientRunoff)
+              surfaceFluxAttenuationCoefficientRunoff, &
+              surfaceFluxAttenuationCoefficientSubglacialRunoff)
 
     end subroutine ocn_diagnostics_variables_destroy!}}}
 
