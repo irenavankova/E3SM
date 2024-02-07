@@ -303,6 +303,8 @@ def buildnml(case, caseroot, compname):
             ic_prefix = 'mpaso.IcoswISC30E3r5.rstFromG-chrysalis'
         if ocn_ismf == 'data':
             data_ismf_file = 'prescribed_ismf_adusumilli2020.IcoswISC30E3r5.20231120.nc'
+        if ocn_sgr == 'data':
+            data_sgr_file = 'IcoswISC30E3r5_DSGR.nc'
 
     #--------------------------------------------------------------------
     # Set OCN_FORCING = datm_forced_restoring if restoring file is available
