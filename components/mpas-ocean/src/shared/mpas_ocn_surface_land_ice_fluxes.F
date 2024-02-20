@@ -468,6 +468,8 @@ contains
                                                   landIceFreshwaterFlux, &
                                                   landIceHeatFlux, heatFluxToLandIce
 
+      real (kind=RKIND), dimension(:), pointer :: frazilIceFreshwaterFlux, landIceFreshwaterFluxTotal
+
       integer, dimension(:), pointer :: landIceFloatingMask
 
       real (kind=RKIND), dimension(:,:), pointer :: &
@@ -504,6 +506,9 @@ contains
       call mpas_pool_get_array(forcingPool, 'landIceFreshwaterFlux', landIceFreshwaterFlux)
       call mpas_pool_get_array(forcingPool, 'landIceHeatFlux', landIceHeatFlux)
       call mpas_pool_get_array(forcingPool, 'heatFluxToLandIce', heatFluxToLandIce)
+
+      call mpas_pool_get_array(forcingPool, 'frazilIceFreshwaterFlux', frazilIceFreshwaterFlux)
+      call mpas_pool_get_array(forcingPool, 'landIceFreshwaterFluxTotal', landIceFreshwaterFluxTotal)
 
       call mpas_pool_get_array(forcingPool, 'landIceInterfaceTracers', landIceInterfaceTracers)
       call mpas_pool_get_dimension(forcingPool, &
@@ -649,6 +654,11 @@ contains
          end do
 
       endif ! jenkinsOn or hollandJenkinsOn
+
+      ! Add landIceFreshwaterFlux to frazilIceFreshwaterFlux, modulated by the landIceFloatingFraction
+      do iCell = 1, nCells
+            landIceFreshwaterFluxTotal(iCell) = landIceFreshwaterFlux(iCell) + landIceFloatingMask(iCell)*frazilIceFreshwaterFlux(iCell)
+      end do
 
       if(useHollandJenkinsAdvDiff) then
          deallocate(freezeInterfaceSalinity, &
