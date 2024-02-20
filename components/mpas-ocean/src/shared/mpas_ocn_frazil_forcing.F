@@ -380,6 +380,7 @@ contains
       real (kind=RKIND), pointer, dimension(:)     :: accumulatedFrazilIceSalinityOld
       real (kind=RKIND), pointer, dimension(:)     :: accumulatedLandIceFrazilMassNew
       real (kind=RKIND), pointer, dimension(:)     :: accumulatedLandIceFrazilMassOld
+      real (kind=RKIND), pointer, dimension(:)     :: frazilIceFreshwaterFlux
       real (kind=RKIND), pointer, dimension(:)     :: ssh
       real (kind=RKIND), pointer, dimension(:,:)   :: layerThickness
       real (kind=RKIND), pointer, dimension(:,:,:) :: activeTracers
@@ -428,6 +429,7 @@ contains
       call mpas_pool_get_array(statePool, 'accumulatedFrazilIceSalinity', accumulatedFrazilIceSalinityOld, 1)
       call mpas_pool_get_array(statePool, 'accumulatedLandIceFrazilMass', accumulatedLandIceFrazilMassNew, 2)
       call mpas_pool_get_array(statePool, 'accumulatedLandIceFrazilMass', accumulatedLandIceFrazilMassOld, 1)
+      call mpas_pool_get_array(statePool, 'frazilIceFreshwaterFlux', frazilIceFreshwaterFlux, 1)
       call mpas_pool_get_array(statePool, 'ssh', ssh, 1)
       call mpas_pool_get_array(tracersPool, 'activeTracers', activeTracers, 1)
       call mpas_pool_get_array(forcingPool, 'frazilTemperatureTendency', frazilTemperatureTendency)
@@ -607,6 +609,8 @@ contains
 
         enddo   ! do k=kBottom,minLevelCell,-1
 
+        ! frazilIceFreshwaterFlux forms part of the landIceFreshwaterFluxTotal
+        frazilIceFreshwaterFlux(iCell) = (sumNewFrazilIceThickness * config_frazil_ice_density) / dt
         ! accumulate frazil mass to column total
         ! note: the accumulatedFrazilIceMass (at both time levels) is reset to zero after being sent to the coupler
         accumulatedFrazilIceMassNew(iCell) = accumulatedFrazilIceMassOld(iCell) + sumNewFrazilIceThickness &
