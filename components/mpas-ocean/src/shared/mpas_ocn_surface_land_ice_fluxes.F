@@ -656,9 +656,9 @@ contains
       endif ! jenkinsOn or hollandJenkinsOn
 
       ! Add landIceFreshwaterFlux to frazilIceFreshwaterFlux, modulated by the landIceFloatingFraction
-      do iCell = 1, nCells
-            landIceFreshwaterFluxTotal(iCell) = landIceFreshwaterFlux(iCell) + landIceFloatingMask(iCell)*frazilIceFreshwaterFlux(iCell)
-      end do
+      !do iCell = 1, nCells
+      !      landIceFreshwaterFluxTotal(iCell) = landIceFreshwaterFlux(iCell) + landIceFloatingMask(iCell)*frazilIceFreshwaterFlux(iCell)
+      !end do
 
       if(useHollandJenkinsAdvDiff) then
          deallocate(freezeInterfaceSalinity, &
