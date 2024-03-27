@@ -54,6 +54,19 @@
         <desc>Option to describe how MPASO will handle ice shelf melt fluxes</desc>
   </entry>
 
+  <entry id="MPASO_GMHT">
+        <type>char</type>
+        <valid_values>none,data</valid_values>
+        <default_value>none</default_value>
+        <values>
+           <value compset="MPASO_">none</value>
+           <value compset="_MPASO%.*DGMHT">data</value>
+        </values>
+        <group>case_comp</group>
+        <file>env_case.xml</file>
+        <desc>Option to describe how MPASO will handle GM horizontal taper</desc>
+  </entry>
+
   <entry id="MPASO_BGC">
         <type>char</type>
         <valid_values></valid_values>

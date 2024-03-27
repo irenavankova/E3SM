@@ -3209,6 +3209,10 @@
 			 description="Horizontal tapering for GM. Varies between 0 and 1."
 			 packages="gm"
 		/>
+		<var name="prescribedHorizontalTaper" type="real" dimensions="nEdges Time"
+			 description="Prescribed horizontal tapering for GM and Redi from a data file. Varies between 0 and 1."
+			 packages="gm"
+		/>
 		<var name="RossbyRadius" type="real" dimensions="nEdges Time" units="m"
 			 description="Rossby Radius, computed in GM routine for some settings"
 			 packages="gm"

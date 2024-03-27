@@ -68,6 +68,11 @@
   </compset>
 
   <compset>
+    <alias>GMPAS-JRA1p5-DIB-PISMF-DGMHT</alias>
+    <lname>2000_DATM%JRA-1p5_SLND_MPASSI%DIB_MPASO%IBPISMFDGMHTDATMFORCED_DROF%JRA-1p5-AIS0ROF_SGLC_SWAV</lname>
+  </compset>
+
+  <compset>
     <alias>GMPAS-JRA1p5-DIB-DISMF</alias>
     <lname>2000_DATM%JRA-1p5_SLND_MPASSI%DIB_MPASO%IBDISMFDATMFORCED_DROF%JRA-1p5-AIS0ROF_SGLC_SWAV</lname>
   </compset>
