@@ -441,6 +441,10 @@
 					description="Maximum value of the ratio between grid-cell size (dcEdge) and Rossby radius for GM and Redi $\kappa$ ramp functions. Used when config_GM_horizontal_taper and/or config_Redi_horizontal_taper are set to RossbyRadius."
 					possible_values="Any positive real value."
 		/>
+		<nml_option name="config_gmht_mode" type="character" default_value="off"
+					description="Selects whether the gm horizontal taper is computed (off) or read from file (data)."
+					possible_values="'off', 'data'"
+		/>
 	</nml_record>
 	<nml_record name="eddy_parameterization" mode="forward">
 		<nml_option name="config_eddyMLD_dens_threshold" type="real" default_value="0.03" units="kg m^-3"

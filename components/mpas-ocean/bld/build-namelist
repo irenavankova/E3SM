@@ -604,6 +604,12 @@ add_default($nl, 'config_GM_horizontal_ramp_max');
 add_default($nl, 'config_GMRedi_Rossby_ramp_min');
 add_default($nl, 'config_GMRedi_Rossby_ramp_max');
 
+if ($OCN_GMHT eq 'data') {
+	add_default($nl, 'config_gmht_mode', 'val'=>"data");
+} else {
+	add_default($nl, 'config_gmht_mode');
+}
+
 #########################################
 # Namelist group: eddy_parameterization #
 #########################################
