@@ -38,6 +38,11 @@
   </compset>
 
   <compset>
+    <alias>GMPAS-NYF-PISMF-DGMHT</alias>
+    <lname>2000_DATM%NYF_SLND_MPASSI_MPASO%PISMFDGMHTDATMFORCED_DROF%NYFAIS45_SGLC_SWAV</lname>
+  </compset>
+
+  <compset>
     <alias>GMPAS-NYF-DISMF</alias>
     <lname>2000_DATM%NYF_SLND_MPASSI_MPASO%DISMFDATMFORCED_DROF%NYFAIS45_SGLC_SWAV</lname>
   </compset>
