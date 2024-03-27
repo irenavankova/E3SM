@@ -677,6 +677,14 @@ Valid values: Any positive real value.
 Default: Defined in namelist_defaults.xml
 </entry>
 
+<entry id="config_gmht_mode" type="char*1024"
+	category="GM_eddy_parameterization" group="GM_eddy_parameterization">
+Selects the mode in which land-ice fluxes are computed.
+
+Valid values: 'off', 'data'
+Default: Defined in namelist_defaults.xml
+</entry>
+
 
 <!-- eddy_parameterization -->
 
