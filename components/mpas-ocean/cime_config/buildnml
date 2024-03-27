@@ -137,7 +137,7 @@ def buildnml(case, caseroot, compname):
             logger.warning("WARNING: The specified compset is requesting ocean ICs spunup from a G-case")
             logger.warning("         But no file available for this grid.")
         if ocn_gmht == 'data':
-            data_gmht_file = 'data_gmht_F1.oQU240wLI.230220.nc'
+            data_gmht_file = 'prescribedHorizontalTaper.oQU240wLI.spinY6_scr5.0001-12-01.nc'
 
     elif ocn_grid == 'oQU120':
         decomp_date = '230424'
@@ -287,7 +287,7 @@ def buildnml(case, caseroot, compname):
         if ocn_ismf == 'data':
             data_ismf_file = 'prescribed_ismf_adusumilli2020.FRISwISC08to60E3r1.20230913.nc'
         if ocn_gmht == 'data':
-            data_gmht_file = 'data_gmht_F1.FRISwISC08to60E3r1.20230913.nc'
+            data_gmht_file = 'prescribedHorizontalTaper.FRISwISC08to60E3r1.spinY6_scr5.0001-12-01.nc'
 
     elif ocn_grid == 'FRISwISC04to60E3r1':
         decomp_date = '20230913'  # changed to date of partiotions in ../files_for_e3sm/assembled_files/inputdata/ocn/mpas-o/FRISwISC04to60E3r1/partitions
@@ -301,6 +301,8 @@ def buildnml(case, caseroot, compname):
             ic_prefix = 'mpaso.FRISwISC04to60E3r1.rstFromG-anvil'   # the spun up file does not yet exist
         if ocn_ismf == 'data':
             data_ismf_file = 'prescribed_ismf_adusumilli2020.FRISwISC04to60E3r1.20230913.nc'
+        if ocn_gmht == 'data':
+            data_gmht_file = 'prescribedHorizontalTaper.FRISwISC04to60E3r1.spinY6_scr5.0001-12-01.nc'
 
     elif ocn_grid == 'FRISwISC02to60E3r1':
         decomp_date = '20230914'  # changed to date of partiotions in ../files_for_e3sm/assembled_files/inputdata/ocn/mpas-o/FRISwISC02to60E3r1/partitions
@@ -314,6 +316,8 @@ def buildnml(case, caseroot, compname):
             ic_prefix = 'mpaso.FRISwISC02to60E3r1.rstFromG-anvil'   # the spun up file does not yet exist
         if ocn_ismf == 'data':
             data_ismf_file = 'prescribed_ismf_adusumilli2020.FRISwISC02to60E3r1.20230914.nc'
+        if ocn_gmht == 'data':
+            data_gmht_file = 'prescribedHorizontalTaper.FRISwISC02to60E3r1.spinY6_scr5.0001-12-01.nc'
 
     elif ocn_grid == 'FRISwISC01to60E3r1':
         decomp_date = '20230915'  # changed to date of partiotions in ../files_for_e3sm/assembled_files/inputdata/ocn/mpas-o/FRISwISC01to60E3r1/partitions
@@ -327,6 +331,8 @@ def buildnml(case, caseroot, compname):
             ic_prefix = 'mpaso.FRISwISC01to60E3r1.rstFromG-anvil'   # the spun up file does not yet exist
         if ocn_ismf == 'data':
             data_ismf_file = 'prescribed_ismf_adusumilli2020.FRISwISC01to60E3r1.20230915.nc'
+        if ocn_gmht == 'data':
+            data_gmht_file = 'prescribedHorizontalTaper.FRISwISC01to60E3r1.spinY6_scr5.0001-12-01.nc'
 
     elif ocn_grid == 'ECwISC30to60E2r1':
         decomp_date = '200915'
@@ -354,7 +360,7 @@ def buildnml(case, caseroot, compname):
         if ocn_ismf == 'data':
             data_ismf_file = 'prescribed_ismf_adusumilli2020.IcoswISC30E3r5.20231120.nc'
         if ocn_gmht == 'data':
-            data_gmht_file = 'data_gmht_F1.IcoswISC30E3r5.20231120.nc'
+            data_gmht_file = 'prescribedHorizontalTaper.IcoswISC30E3r5.spinY6_scr5.0001-12-01.nc'
 
     #--------------------------------------------------------------------
     # Set OCN_FORCING = datm_forced_restoring if restoring file is available
