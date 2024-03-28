@@ -139,7 +139,8 @@ contains
 
       real(kind=RKIND), dimension(:, :), pointer :: &
                                                     normalVelocity, &
-                                                    layerThickness
+                                                    layerThickness, &
+                                                    prescribedHorizontalTaper
 
       real(kind=RKIND), dimension(:), pointer   :: &
                 ssh, fEdge
@@ -179,6 +180,7 @@ contains
       call mpas_timer_start('gm bolus velocity')
 
       call mpas_pool_get_array(statePool, 'normalVelocity', normalVelocity, timeLevel)
+      call mpas_pool_get_array(statePool, 'prescribedHorizontalTaper', prescribedHorizontalTaper)
       call mpas_pool_get_array(statePool, 'layerThickness', layerThickness, timeLevel)
       call mpas_pool_get_subpool(statePool, 'tracers', tracersPool)
       call mpas_pool_get_array(statePool, 'ssh', ssh, timeLevel)
