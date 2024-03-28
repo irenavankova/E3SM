@@ -667,6 +667,18 @@ contains
             deallocate (RossbyRadiusTaper)
          end if
 
+         ! Overwrite with prescribed taper from file
+         if (config_gmht_mode == 'data') then
+            !$omp parallel
+            !$omp do schedule(runtime)
+            do iEdge = 1,nEdges
+              gmHorizontalTaper(iEdge) = prescribedHorizontalTaper(iEdge)
+              RediHorizontalTaper(iEdge) = prescribedHorizontalTaper(iEdge)
+            end do
+            !$omp end do
+            !$omp end parallel
+        end if
+
          if (config_Redi_closure == 'equalGM') then
             ! Set Redi closure to be the same as the GM closure, i.e. if
             ! config_GM_closure is EdenGreatbatch or Visbeck, you will see those
