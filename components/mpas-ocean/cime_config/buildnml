@@ -359,6 +359,8 @@ def buildnml(case, caseroot, compname):
             eco_forcing_file = 'ecoForcingSurfaceMonthly.IcoswISC30E3r5.20231215.nc'
         if ocn_ismf == 'data':
             data_ismf_file = 'prescribed_ismf_paolo2023.IcoswISC30E3r5.20240227.nc'
+        if ocn_sgr == 'data':
+            data_sgr_file = 'IcoswISC30E3r5_DSGR.nc'
 
     elif ocn_grid == 'IcosXISC30E3r7':
         decomp_date = '20240314'
