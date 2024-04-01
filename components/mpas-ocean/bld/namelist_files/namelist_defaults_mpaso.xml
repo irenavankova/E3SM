@@ -406,6 +406,7 @@
 <config_land_ice_flux_mode ocn_grid="FRISwISC04to60E3r1">'pressure_only'</config_land_ice_flux_mode>
 <config_land_ice_flux_mode ocn_grid="FRISwISC02to60E3r1">'pressure_only'</config_land_ice_flux_mode>
 <config_land_ice_flux_mode ocn_grid="FRISwISC01to60E3r1">'pressure_only'</config_land_ice_flux_mode>
+<config_subglacial_runoff_mode>'off'</config_subglacial_runoff_mode>
 <config_land_ice_flux_formulation>'Jenkins'</config_land_ice_flux_formulation>
 <config_land_ice_flux_useHollandJenkinsAdvDiff>.false.</config_land_ice_flux_useHollandJenkinsAdvDiff>
 <config_land_ice_flux_attenuation_coefficient>10.0</config_land_ice_flux_attenuation_coefficient>

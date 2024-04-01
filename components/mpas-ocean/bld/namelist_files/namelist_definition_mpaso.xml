@@ -1669,6 +1669,14 @@ Valid values: Any positive real number
 Default: Defined in namelist_defaults.xml
 </entry>
 
+<entry id="config_subglacial_runoff_mode" type="char*1024"
+	category="land_ice_fluxes" group="land_ice_fluxes">
+Selects the mode in which subglacial runoff fluxes are computed.
+
+Valid values: 'off', 'data'
+Default: Defined in namelist_defaults.xml
+</entry>
+
 
 <!-- advection -->
 
