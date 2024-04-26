@@ -2407,7 +2407,7 @@ end if
        accumulatedRiverRunoffFlux        = 0.0_RKIND
        if (trim(config_subglacial_runoff_mode) == 'data') then
           accumulatedSubglacialRunoffFlux   = 0.0_RKIND
-       end
+       end if
        accumulatedIceRunoffFlux          = 0.0_RKIND
        accumulatedRemovedRiverRunoffFlux = 0.0_RKIND
        accumulatedRemovedIceRunoffFlux   = 0.0_RKIND
