@@ -168,7 +168,7 @@ contains
 
 
       !
-      ! layer thickness tendency: 
+      ! layer thickness tendency:
       !    initialize to zero and start accumulating tendency terms
       !
 #ifdef MPAS_OPENACC
@@ -186,11 +186,16 @@ contains
       do iCell = 1, nCellsAll
          surfaceThicknessFlux(iCell) = 0.0_RKIND
          surfaceThicknessFluxRunoff(iCell) = 0.0_RKIND
-         surfaceThicknessFluxSubglacialRunoff(iCell) = 0.0_RKIND
          do k=1,nVertLevels
             tendThick(k, iCell) = 0.0_RKIND
          end do
       end do
+      if (trim(config_subglacial_runoff_mode) == 'data') then
+         do iCell = 1, nCellsAll
+            surfaceThicknessFluxSubglacialRunoff(iCell) = 0.0_RKIND
+         end do
+      end if
+
 #ifndef MPAS_OPENACC
       !$omp end do
       !$omp end parallel
@@ -377,7 +382,7 @@ contains
       !$acc    layerThickness, activeTracers)
 
       !*** Set output variables to zero before accumulating results
-      
+
 #ifdef MPAS_OPENACC
       !$acc parallel loop present(sfcStress, tendVel) private(k)
 #else
@@ -442,7 +447,7 @@ contains
                                tendVel, err)
 
       ! Compute ssh additions due to self-attraction and loading
-      if(mpas_is_alarm_ringing(domain % clock, 'salComputeAlarm', ierr=err)) then 
+      if(mpas_is_alarm_ringing(domain % clock, 'salComputeAlarm', ierr=err)) then
 #ifdef MPAS_DEBUG
           call mpas_log_write('       Computing SAL')
 #endif
@@ -450,7 +455,7 @@ contains
           call mpas_reset_clock_alarm(domain % clock, 'salComputeAlarm', ierr=err)
       endif
 
-      ! Add tidal potential (if needed) 
+      ! Add tidal potential (if needed)
       call ocn_compute_tidal_potential_forcing(err)
       if ( (config_time_integrator == 'RK4') &
            .or. (config_time_integrator =='LTS') &
@@ -467,7 +472,7 @@ contains
                                 sfcStress, kineticEnergyCell, &
                                 layerThickEdgeDrag, &
                                 layerThickEdgeMean, tendVel, err)
- 
+
       ! Compute tendency term for manufactured solution
       call ocn_manufactured_solution_tend_vel(tendVel, err)
 
@@ -554,7 +559,7 @@ contains
 
       integer :: &
          iCell, iEdge, k, n, &! loop counters for cell,edge,vert,tracer
-         err,                &! internal error flag 
+         err,                &! internal error flag
          timeLevel,          &! time level to use for state variables
          indxTemp, indxSalt, &! tracer index for temperature, salinity
          indxCFC11,          &! tracer index for CFC11
@@ -627,7 +632,7 @@ contains
          tracerGroupTend, &! tendencies for current tracer group
          activeTracers,   &! retain active tracers
          ecosysTracers,   &! retain ecosys tracers for DMS, MacroMols
-         tracerGroupInteriorRestoringRate, &! int restoring timescale 
+         tracerGroupInteriorRestoringRate, &! int restoring timescale
          tracerGroupInteriorRestoringValue  ! int restoring value
 
       ! Scratch Arrays
@@ -640,7 +645,7 @@ contains
 
       ! return if all tracer tendencies disabled
       ! otherwise start timer and proceed
-   
+
       if (config_disable_tr_all_tend) return
       call mpas_timer_start("ocn_tend_tracer")
 
@@ -658,7 +663,7 @@ contains
          activeTracersOnly = .false.
       end if
 
-      ! retrieve data from pools 
+      ! retrieve data from pools
       call mpas_pool_get_subpool(statePool,   'tracers', &
                                                tracersPool)
       call mpas_pool_get_subpool(tendPool,    'tracersTend', &
@@ -720,7 +725,7 @@ contains
       !  - the pool member is a field
       !  - the group is the active tracer group
       !  - other groups if the active tracer only flag not on
-      !  - the specific use flag for the given group is enabled 
+      !  - the specific use flag for the given group is enabled
       ! We do not indent these various loops/conditions to avoid
       ! excessive indentation.
       !
@@ -750,7 +755,7 @@ contains
 
       if ( config_use_tracerGroup ) then
 
-         ! This group meets all requirements, now check for 
+         ! This group meets all requirements, now check for
          ! requested options
 
          computeBudgets =  (isActiveTracer .and.  &
@@ -792,7 +797,7 @@ contains
                                   modifiedGroupName, &
                                   tracerGroupSurfaceFlux)
 
-         ! Get Array of total surface temp/salt flux 
+         ! Get Array of total surface temp/salt flux
          ! (includes thickness tendencies)
          call mpas_pool_get_array(tracersSurfaceFluxPool, &
                                   'nonLocalSurfaceTracerFlux', &
@@ -840,9 +845,13 @@ contains
          do n=1,nTracersGroup
             tracerGroupSurfaceFlux       (n,iCell) = 0.0_RKIND
             tracerGroupSurfaceFluxRunoff (n,iCell) = 0.0_RKIND
-            tracerGroupSurfaceFluxSubglacialRunoff (n,iCell) = 0.0_RKIND
             tracerGroupSurfaceFluxRemoved(n,iCell) = 0.0_RKIND
          end do
+         if (trim(config_subglacial_runoff_mode) == 'data') then
+             do n=1,nTracersGroup
+                tracerGroupSurfaceFluxSubglacialRunoff (n,iCell) = 0.0_RKIND
+             end do
+         end if
          end do
          !$omp end do
          !$omp end parallel
@@ -884,7 +893,7 @@ contains
                                            zMid, minLevelCell, indxTemp, &
                                            indxSalt, tracerGroupSurfaceFlux, &
                                            err)
-                                           
+
          endif ! ecosys tracers
 
          !
@@ -955,7 +964,7 @@ contains
               call mpas_pool_get_dimension(tracersPool, 'index_CFC12', indexCFC12)
               indxCFC12 = indexCFC12 ! convert to int scalar due to problems with int scalar pointers
             endif
-                                                 
+
             call ocn_tracer_CFC_surface_flux_compute(activeTracers, &
                                         tracerGroup, forcingPool,  &
                                         nTracersGroup, nCellsOwned, &
