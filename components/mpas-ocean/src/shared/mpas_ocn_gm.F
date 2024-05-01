@@ -139,9 +139,8 @@ contains
 
       real(kind=RKIND), dimension(:, :), pointer :: &
                                                     normalVelocity, &
-                                                    layerThickness, &
-                                                    prescribedHorizontalTaper
-
+                                                    layerThickness
+      real(kind=RKIND), dimension(:), pointer :: prescribedHorizontalTaper
       real(kind=RKIND), dimension(:), pointer   :: &
                 ssh, fEdge
       real(kind=RKIND), dimension(:), pointer   :: areaCell, dcEdge, dvEdge, tridiagA, tridiagB, tridiagC, rightHandSide
