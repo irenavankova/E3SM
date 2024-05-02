@@ -2367,11 +2367,6 @@
 			 description="The layerThickness after the Lagrangian step, prior to remapping."
 			 packages="verticalRemapPKG"
 		/>
-				<!-- FIELDS FOR GM INPUT -->
-		<var name="prescribedHorizontalTaper" type="real" dimensions="nEdges Time"
-			 description="Prescribed horizontal tapering for GM and Redi from a data file. Varies between 0 and 1."
-			 packages="gm"
-		/>
 	</var_struct>
 	<var_struct name="mesh" time_levs="1">
 		<var name="latCell" type="real" dimensions="nCells" units="radians"
@@ -3933,6 +3928,11 @@
 	</var_struct>
 	<var_struct name="scratch" time_levs="1">
 
+		<!-- FIELDS FOR GM INPUT TEST -->
+		<var name="prescribedHorizontalTaper" type="real" dimensions="nEdges Time"
+			 description="Prescribed horizontal tapering for GM and Redi from a data file. Varies between 0 and 1."
+			 packages="gm"
+		/>
 		<!-- FIELDS FOR TENSOR OPERATIONS -->
 		<var name="normalVelocityTest"
 			 persistence="scratch"

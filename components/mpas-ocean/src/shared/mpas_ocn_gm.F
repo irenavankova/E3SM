@@ -179,7 +179,7 @@ contains
       call mpas_timer_start('gm bolus velocity')
 
       call mpas_pool_get_array(statePool, 'normalVelocity', normalVelocity, timeLevel)
-      call mpas_pool_get_array(statePool, 'prescribedHorizontalTaper', prescribedHorizontalTaper)
+      call mpas_pool_get_array(scratchPool, 'prescribedHorizontalTaper', prescribedHorizontalTaper)
       call mpas_pool_get_array(statePool, 'layerThickness', layerThickness, timeLevel)
       call mpas_pool_get_subpool(statePool, 'tracers', tracersPool)
       call mpas_pool_get_array(statePool, 'ssh', ssh, timeLevel)
