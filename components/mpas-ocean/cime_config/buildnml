@@ -1262,8 +1262,10 @@ def buildnml(case, caseroot, compname):
                 lines.append('    <var name="mocStreamvalLatAndDepthGM"/>')
                 lines.append('    <var name="mocStreamvalLatAndDepthRegionGM"/>')
 
-            if ocn_grid.startswith("FRIS"):
-                lines.append('    <var name="gmHorizontalTaper"/>')
+            lines.append('    <var name="gmHorizontalTaper"/>')
+            lines.append('    <var name="rediHorizontalTaper"/>')
+            if ocn_gmht == 'data':
+                lines.append('    <var name="prescribedHorizontalTaper"/>')
 
             lines.append('    <var name="mocStreamvalLatAndDepthMLE"/>')
             lines.append('    <var name="mocStreamvalLatAndDepthRegionMLE"/>')
