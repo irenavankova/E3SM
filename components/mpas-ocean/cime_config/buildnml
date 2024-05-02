@@ -1263,7 +1263,7 @@ def buildnml(case, caseroot, compname):
                 lines.append('    <var name="mocStreamvalLatAndDepthRegionGM"/>')
 
             lines.append('    <var name="gmHorizontalTaper"/>')
-            lines.append('    <var name="rediHorizontalTaper"/>')
+            lines.append('    <var name="RediHorizontalTaper"/>')
             if ocn_gmht == 'data':
                 lines.append('    <var name="prescribedHorizontalTaper"/>')
 
