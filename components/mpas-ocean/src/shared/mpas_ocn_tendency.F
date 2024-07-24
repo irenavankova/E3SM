@@ -850,8 +850,6 @@ contains
                                   modifiedGroupName, &
                                   tracerGroupSurfaceFluxSubglacialRunoff)
 
-         call mpas_pool_print_summary(tracersSurfaceFluxPool, MPAS_POOL_FIELD, .true.)
-
          ! Get surface flux removed array to keep track of how much
          ! flux is ignored
          modifiedGroupName = groupName // "SurfaceFluxRemoved"
