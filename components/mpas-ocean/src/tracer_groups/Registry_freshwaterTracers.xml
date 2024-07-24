@@ -67,6 +67,9 @@
 				<var name="riverRunoffFreshWaterConcentration" array_group="freshwaterGRP" units="fractional"
 				description="Concentration of river runoff-derived freshwater by volume."
 				/>
+				<var name="subglacialRunoffFreshWaterConcentration" array_group="freshwaterGRP" units="fractional"
+				description="Concentration of subglacial runoff-derived freshwater by volume."
+				/>
 			</var_array>
 		</var_struct>
 	</var_struct>
@@ -94,6 +97,9 @@
 				/>
 				<var name="riverRunoffFreshWaterTend" array_group="freshwaterGRP" units="fractional"
 				description="Concentration of river runoff-derived freshwater by volume."
+				/>
+				<var name="subglacialRunoffFreshWaterTend" array_group="freshwaterGRP" units="fractional"
+				description="Concentration of subglacial runoff-derived freshwater by volume."
 				/>
 			</var_array>
 		</var_struct>
@@ -123,6 +129,9 @@
 				<var name="riverRunoffFreshWaterSurfaceFlux" array_group="freshwaterTracerFluxGRP" units="fractional"
 				description="Concentration of river runoff-derived freshwater by volume."
 				/>
+				<var name="subglacialRunoffFreshWaterSurfaceFlux" array_group="freshwaterTracerFluxGRP" units="fractional"
+				description="Concentration of subglacial runoff-derived freshwater by volume."
+				/>
 			</var_array>
 			<var_array name="freshwaterTracersSurfaceFluxRunoff" type="real" dimensions="nCells Time" packages="freshwaterTracersPKG">
 				<var name="snowSurfaceFluxRunoff" array_group="freshwaterTracersSurfaceFluxRunoffGRP" units="fractional"
@@ -146,6 +155,9 @@
 				<var name="riverRunoffFreshWaterSurfaceFluxRunoff" array_group="freshwaterTracersSurfaceFluxRunoffGRP" units="fractional"
 				description="Concentration of river runoff-derived freshwater by volume."
 				/>
+				<var name="subglacialRunoffFreshWaterSurfaceFluxRunoff" array_group="freshwaterTracersSurfaceFluxRunoffGRP" units="fractional"
+				description="Concentration of subglacial runoff-derived freshwater by volume."
+				/>
 			</var_array>
 			<var_array name="freshwaterTracersSurfaceFluxRemoved" type="real" dimensions="nCells Time" packages="freshwaterTracersPKG">
 				<var name="snowSurfaceFluxRemoved" array_group="freshwaterTracersSurfaceFluxRemovedGRP" units="fractional"
@@ -168,6 +180,9 @@
 				/>
 				<var name="riverRunoffFreshWaterSurfaceFluxRemoved" array_group="freshwaterTracersSurfaceFluxRemovedGRP" units="fractional"
 				description="Concentration of river runoff-derived freshwater by volume."
+				/>
+				<var name="subglacialRunoffFreshWaterSurfaceFluxRemoved" array_group="freshwaterTracersSurfaceFluxRemovedGRP" units="fractional"
+				description="Concentration of subglacial runoff-derived freshwater by volume."
 				/>
 			</var_array>
 		</var_struct>
