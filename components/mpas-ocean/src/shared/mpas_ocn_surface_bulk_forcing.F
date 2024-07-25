@@ -188,7 +188,7 @@ contains
             tracersSurfaceFluxSubglacialRunoff, err)
       elseif ( trim(groupName) == 'freshwaterTracers' ) then
          call ocn_surface_bulk_forcing_freshwater_tracers_subglacial_runoff(meshPool, forcingPool, tracerGroup,  &
-            tracersSurfaceFlux, err)!{{{
+            tracersSurfaceFluxSubglacialRunoff, err)!{{{
       end if
       call mpas_timer_stop("bulk_" // trim(groupName))
 
@@ -998,7 +998,7 @@ contains
 !-----------------------------------------------------------------------
 
    subroutine ocn_surface_bulk_forcing_freshwater_tracers_subglacial_runoff(meshPool, forcingPool, tracerGroup,  &
-      freshwaterSurfaceFlux, err)!{{{
+      tracersSurfaceFluxSubglacialRunoff, err)!{{{
 
       !-----------------------------------------------------------------
       !
@@ -1016,7 +1016,7 @@ contains
       type (mpas_pool_type), intent(inout) :: forcingPool
 
       ! two dimensional arrays
-      real (kind=RKIND), dimension(:,:), intent(inout) :: freshwaterSurfaceFlux
+      real (kind=RKIND), dimension(:,:), intent(inout) :: tracersSurfaceFluxSubglacialRunoff
       real (kind=RKIND), dimension(:,:,:), intent(inout) :: tracerGroup
 
       !-----------------------------------------------------------------
@@ -1051,11 +1051,11 @@ contains
       nCells = nCellsArray( 3 )
       if (associated(indexSubglacialRunoff) .and. associated(subglacialRunoffFlux)) then
         do iCell=1,nCells
-          freshwaterSurfaceFlux(indexSubglacialRunoff, iCell) = subglacialRunoffFlux(iCell) / rho_sw
+          tracersSurfaceFluxSubglacialRunoff(indexSubglacialRunoff, iCell) = subglacialRunoffFlux(iCell) / rho_sw
         enddo  !  iCell
       else
         call mpas_log_write('indexSubglacialRunoff or subglacialRunoffFlux is not associated')
-        freshwaterSurfaceFlux(indexSubglacialRunoff, :) = 0.0_RKIND
+        tracersSurfaceFluxSubglacialRunoff(indexSubglacialRunoff, :) = 0.0_RKIND
       endif
 
    end subroutine ocn_surface_bulk_forcing_freshwater_tracers_subglacial_runoff!}}}
