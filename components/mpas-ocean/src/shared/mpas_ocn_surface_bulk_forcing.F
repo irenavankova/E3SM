@@ -1046,7 +1046,7 @@ contains
       call mpas_pool_get_subpool(forcingPool, 'tracersSurfaceFlux',tracersSurfaceFluxPool)
       call mpas_pool_get_dimension(tracersSurfaceFluxPool, 'index_subglacialRunoffFreshWaterSurfaceFlux', indexSubglacialRunoff)
 
-      call mpas_pool_get_array(forcingPool, 'subglacialRunoffFlux', riverRunoffFlux)
+      call mpas_pool_get_array(forcingPool, 'subglacialRunoffFlux', subglacialRunoffFlux)
 
       nCells = nCellsArray( 3 )
       if (associated(indexSubglacialRunoff) .and. associated(subglacialRunoffFlux)) then
