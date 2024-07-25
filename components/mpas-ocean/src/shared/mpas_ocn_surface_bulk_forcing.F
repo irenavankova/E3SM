@@ -187,7 +187,7 @@ contains
          call ocn_surface_bulk_forcing_active_tracers_subglacial_runoff(meshPool, forcingPool,  &
             tracersSurfaceFluxSubglacialRunoff, err)
       elseif ( trim(groupName) == 'freshwaterTracers' ) then
-         call ocn_surface_bulk_forcing_freshwater_tracers_subglacial_runoff(meshPool, forcingPool, tracerGroup,  &
+         call ocn_surface_bulk_forcing_freshwater_tracers_subglacial_runoff(meshPool, forcingPool,  &
             tracersSurfaceFluxSubglacialRunoff, err)!{{{
       end if
       call mpas_timer_stop("bulk_" // trim(groupName))
@@ -997,7 +997,7 @@ contains
 !
 !-----------------------------------------------------------------------
 
-   subroutine ocn_surface_bulk_forcing_freshwater_tracers_subglacial_runoff(meshPool, forcingPool, tracerGroup,  &
+   subroutine ocn_surface_bulk_forcing_freshwater_tracers_subglacial_runoff(meshPool, forcingPool,  &
       tracersSurfaceFluxSubglacialRunoff, err)!{{{
 
       !-----------------------------------------------------------------
@@ -1017,7 +1017,6 @@ contains
 
       ! two dimensional arrays
       real (kind=RKIND), dimension(:,:), intent(inout) :: tracersSurfaceFluxSubglacialRunoff
-      real (kind=RKIND), dimension(:,:,:), intent(inout) :: tracerGroup
 
       !-----------------------------------------------------------------
       !
