@@ -843,16 +843,14 @@ contains
                                   tracerGroupSurfaceFluxRunoff)
 
          if (trim(config_subglacial_runoff_mode) == 'data') then
-             call mpas_log_write('Tendency: 864')
              ! Get surface flux due to subglacial runoff array
              modifiedGroupName = groupName // "SurfaceFluxSubglacialRunoff"
              call mpas_pool_get_array(tracersSurfaceFluxPool, &
                                       modifiedGroupName, &
                                       tracerGroupSurfaceFluxSubglacialRunoff)
-             call mpas_log_write('Tendency: 852')
          end if
 
-         call mpas_pool_print_summary(tracersSurfaceFluxPool, MPAS_POOL_FIELD, .true.)
+         !call mpas_pool_print_summary(tracersSurfaceFluxPool, MPAS_POOL_FIELD, .true.)
 
          ! Get surface flux removed array to keep track of how much
          ! flux is ignored
@@ -891,9 +889,7 @@ contains
          !$omp do schedule(runtime) private(n)
          do iCell = 1, nCellsAll
              do n=1,nTracersGroup
-                call mpas_log_write('Tendency: 894')
                 tracerGroupSurfaceFluxSubglacialRunoff (n,iCell) = 0.0_RKIND
-                call mpas_log_write('Tendency: 896')
              end do
          end do
          !$omp end do
