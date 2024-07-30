@@ -1036,7 +1036,7 @@ contains
 
       type(mpas_pool_type),pointer :: tracersSurfaceFluxPool
       integer, pointer :: indexSubglacialRunoff
-      real (kind=RKIND), dimension(:), pointer :: & subglacialRunoffFlux
+      real (kind=RKIND), dimension(:), pointer :: subglacialRunoffFlux
 
       err = 0
 
