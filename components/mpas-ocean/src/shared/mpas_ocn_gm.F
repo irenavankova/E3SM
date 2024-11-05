@@ -507,7 +507,7 @@ contains
                                                      config_GM_spatially_variable_max_kappa,          &
                                                      BruntVaisalaFreqTopEdge/(maxN + 1.0E-10_RKIND)), &
                                                      1.0_RKIND)
-                  RediKappa(k,iEdge) = RediKappa(k,iEdge)*min(max(0.1_RKIND,BruntVaisalaFreqTopEdge/  &
+                  RediKappa(k,iEdge) = config_GM_spatially_variable_max_kappa*min(max(0.1_RKIND,BruntVaisalaFreqTopEdge/  &
                                                                  (maxN+1.0E-15)),1.0_RKIND)
                end do
            enddo
