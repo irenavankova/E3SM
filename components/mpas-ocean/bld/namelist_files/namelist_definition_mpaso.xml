@@ -399,6 +399,22 @@ Valid values: Positive real numbers.
 Default: Defined in namelist_defaults.xml
 </entry>
 
+<entry id="config_Redi_spatially_variable_min_kappa" type="real"
+	category="Redi_isopycnal_mixing" group="Redi_isopycnal_mixing">
+minimum value of bolus diffusivity for spatially variable Redi schemes. Used when config_GM_closure is 'N2_dependent'."
+
+Valid values: values around 100s
+Default: Defined in namelist_defaults.xml
+</entry>
+
+<entry id="config_Redi_spatially_variable_max_kappa" type="real"
+	category="Redi_isopycnal_mixing" group="Redi_isopycnal_mixing">
+maximum value of bolus diffusivity for spatially variable Redi schemes. Used when config_GM_closure is 'N2_dependent'."
+
+Valid values: values around 100s
+Default: Defined in namelist_defaults.xml
+</entry>
+
 <entry id="config_Redi_maximum_slope" type="real"
 	category="Redi_isopycnal_mixing" group="Redi_isopycnal_mixing">
 value of maximum allowed isopycnal slope from Danabasoglu et al 2008 equation (2)

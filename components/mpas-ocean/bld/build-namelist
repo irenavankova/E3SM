@@ -567,6 +567,8 @@ add_default($nl, 'config_Leith_visc2_max');
 add_default($nl, 'config_use_Redi');
 add_default($nl, 'config_Redi_closure');
 add_default($nl, 'config_Redi_constant_kappa');
+add_default($nl, 'config_Redi_spatially_variable_min_kappa');
+add_default($nl, 'config_Redi_spatially_variable_max_kappa');
 add_default($nl, 'config_Redi_maximum_slope');
 add_default($nl, 'config_Redi_use_slope_taper');
 add_default($nl, 'config_Redi_use_surface_taper');

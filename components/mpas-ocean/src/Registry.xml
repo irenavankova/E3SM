@@ -305,6 +305,14 @@
 					description="The Redi diffusion coefficient. Only used when config_Redi_closure = 'constant'."
 					possible_values="Positive real numbers."
 		/>
+		<nml_option name="config_Redi_spatially_variable_min_kappa" type="real" default_value="30.0" units="m^2 s^-1"
+					description="minimum value of bolus diffusivity for spatially variable Redi schemes. Used when config_GM_closure is 'N2_dependent'."
+					possible_values="values around 100s"
+		/>
+		<nml_option name="config_Redi_spatially_variable_max_kappa" type="real" default_value="300.0" units="m^2 s^-1"
+					description="maximum value of bolus diffusivity for spatially variable Redi schemes. Used when config_GM_closure is 'N2_dependent'."
+					possible_values="values around 100s"
+		/>
 		<nml_option name="config_Redi_maximum_slope" type="real" default_value="0.3" units="non-dimensional"
 					description="value of maximum allowed isopycnal slope from Danabasoglu et al 2008 equation (2)"
 					possible_values="positive real numbers, but small"
